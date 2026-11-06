@@ -50,3 +50,9 @@
 - User supplied actual endpoint:https://maas.qianwenaiapi.com/compatible-mode/v1. Updated .env and checked-in defaults/example.
 - Real smoke succeeded HTTP200; qwen3.8-max extracted1 synthetic claim; independent verifier accepted1;1324 total tokens. Existing key confirmed usable.
 - Full regression:61 passed,0 failed; core coverage98.72%;mypy57 source files clean. No numerical forecasting changes.
+
+## NPM availability recheck — 2026-11-07
+- User asked whether missing verified NPM data means LLM cannot access target page.
+- Database query confirmed observations=0. Provider is manual-import-only, not a live page-fetch implementation.
+- Direct public GET returned200 (2095-byte JS app shell); browser rendered OpenAI Valuation $1.281T, As of Nov4,2026, with no login. Visual screenshot confirmed both fields.
+- Corrected blanket inaccessible/403 interpretation. Access check saved in docs/npm_access_check.json. No observation imported in this diagnostic turn.

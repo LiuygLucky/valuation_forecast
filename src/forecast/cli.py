@@ -22,6 +22,12 @@ def main(argv=None):
     )
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("init-db")
+    capture = commands.add_parser("capture-npm")
+    capture.add_argument(
+        "--browser-export",
+        type=Path,
+        help="Import saved public browser DOM/screenshot with original capture time",
+    )
     imp = commands.add_parser("import-npm")
     imp.add_argument("--csv", type=Path, required=True)
     predict = commands.add_parser("forecast")
@@ -47,6 +53,25 @@ def main(argv=None):
         if args.command == "init-db":
             init_db()
             result = {"status": "INITIALIZED"}
+        elif args.command == "capture-npm":
+            from forecast.agent.orchestrator import record_health
+            from forecast.ingestion.npm_capture import ingest_capture
+            from forecast.providers.npm_browser import NpmBrowserProvider, exported_browser_renderer
+
+            renderer = (
+                exported_browser_renderer(args.browser_export) if args.browser_export else None
+            )
+            fetched = NpmBrowserProvider(renderer=renderer).fetch_latest()
+            with Session(init_db()) as session, session.begin():
+                record_health(session, fetched)
+                result = {"status": fetched.status, "reason": fetched.reason, **fetched.data}
+                if fetched.status == "OK":
+                    result["imported"] = ingest_capture(
+                        session, Path(fetched.data["capture_manifest"])
+                    )
+            if fetched.status != "OK":
+                print(json.dumps(result, ensure_ascii=False, indent=2))
+                return 2
         elif args.command == "import-npm":
             with Session(init_db()) as session, session.begin():
                 result = {"imported": import_csv(session, args.csv, data_dir() / "raw")}

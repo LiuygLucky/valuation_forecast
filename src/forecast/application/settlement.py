@@ -50,7 +50,10 @@ def settle(
                 and not obs.synthetic
                 and obs.metric_name == "npm_valuation"
                 and obs.effective_date <= target_date
-                and utc(obs.observed_at) <= end
+                and (
+                    utc(obs.observed_at) <= end
+                    or version.metadata_json.get("effective_timestamp_precision") == "date"
+                )
                 and utc(version.captured_at) <= now
                 and version.archive_uri
             ):
@@ -58,7 +61,9 @@ def settle(
                 expected = version.metadata_json.get("artifact_sha256")
                 if artifact.is_file() and expected and sha256(artifact.read_bytes()) == expected:
                     eligible.append((obs, version))
-        eligible.sort(key=lambda pair: (pair[0].observed_at, pair[1].captured_at))
+        eligible.sort(
+            key=lambda pair: (pair[0].effective_date, pair[0].observed_at, pair[1].captured_at)
+        )
         chosen = eligible[-1] if eligible else None
         resolved = bool(chosen and confirm_final_observation and method_note.strip())
         if resolved and chosen is not None:

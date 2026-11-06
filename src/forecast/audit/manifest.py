@@ -21,7 +21,16 @@ def code_identity():
 def library_versions():
     return {"python": platform.python_version()} | {
         name: importlib.metadata.version(name)
-        for name in ("numpy", "scipy", "pydantic", "sqlalchemy", "alembic", "httpx", "networkx")
+        for name in (
+            "numpy",
+            "scipy",
+            "pydantic",
+            "sqlalchemy",
+            "alembic",
+            "httpx",
+            "networkx",
+            "playwright",
+        )
     }
 
 

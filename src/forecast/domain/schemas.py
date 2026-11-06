@@ -13,6 +13,7 @@ class StrictModel(BaseModel):
 
 class NpmObservation(StrictModel):
     observed_on: date
+    effective_date: date | None = None
     valuation_trillion: Decimal = Field(gt=0)
     captured_at: AwareDatetime
     observed_at: AwareDatetime
@@ -22,7 +23,9 @@ class NpmObservation(StrictModel):
     methodology: str = Field(min_length=1)
     review_status: Literal["VERIFIED", "UNVERIFIED"]
     reviewer: str | None = None
-    ingestion_method: Literal["manual_csv", "manual_entry", "authorized_export"] = "manual_csv"
+    ingestion_method: Literal[
+        "manual_csv", "manual_entry", "authorized_export", "public_browser"
+    ] = "manual_csv"
     metric_type: Literal["npm_valuation"] = "npm_valuation"
     indicative: bool = True
     synthetic: bool = False
@@ -31,6 +34,8 @@ class NpmObservation(StrictModel):
 
     @model_validator(mode="after")
     def check(self):
+        if self.effective_date and self.effective_date > self.observed_on:
+            raise ValueError("effective_date cannot be after observation date")
         if self.observed_at.astimezone(ET).date() != self.observed_on:
             raise ValueError("observed_on must match observation's New York date")
         if utc(self.observed_at) > utc(self.captured_at):

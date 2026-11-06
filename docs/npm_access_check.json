@@ -1,0 +1,18 @@
+{
+  "checked_at_utc": "2026-11-06T21:29:43.852153+00:00",
+  "url": "https://fe.secondmarket.com/companies/company-30839e0b-2730-4495-839f-1bf638fa9cca/data",
+  "http_status": 200,
+  "http_body_bytes": 2095,
+  "verification_method": "Visible rendered browser page and screenshot inspected by Codex",
+  "company": "OpenAI",
+  "displayed_metric": "Valuation",
+  "displayed_value": "$1.281T",
+  "valuation_trillion": "1.281",
+  "effective_date": "2026-11-04",
+  "effective_timestamp_precision": "date_only; exact update time not established",
+  "authentication_required_in_check": false,
+  "database_observation_count_at_check": 0,
+  "imported_into_observations": false,
+  "implementation_gap": "NPM provider currently manual-import-only; no browser-rendered ingestion adapter",
+  "note": "Public dynamic page accessible. Prior HTTP403 does not establish permanent inability to access. Current LLM extractor receives supplied excerpts, not an attached browser."
+}

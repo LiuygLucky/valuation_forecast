@@ -23,3 +23,6 @@ User selected Qwen3.8-Max instead of DeepSeek. Previous DeepSeek-domain HTTP401 
 Official references: [first API call](https://docs.qwencloud.com/developer-guides/getting-started/first-api-call), [model ID](https://docs.qwencloud.com/models/qwen3-8-max), [JSON output](https://docs.qwencloud.com/developer-guides/text-generation/structured-output), [thinking parameters](https://docs.qwencloud.com/developer-guides/text-generation/thinking).
 
 Final endpoint confirmed by user:https://maas.qianwenaiapi.com/compatible-mode/v1. Real Qwen3.8-Max HTTP200,1 synthetic claim extracted and verified. Existing credential is usable. Current smoke supersedes endpoint-diagnosis uncertainty; original observations remain historical records.
+
+## NPM最新直接访问检查（2026-11-07）
+普通HTTP200返回2095字节前端HTML；实际浏览器渲染后公开显示OpenAI Valuation $1.281T、有效日2026-11-04，无需登录。此前403仅为当时特定访问路径结果，不代表永久不可访问。当前项目NPM adapter仍为人工导入，数据库0条观测。访问核验见npm_access_check.json；未新增真实观测或伪造精确更新时间。

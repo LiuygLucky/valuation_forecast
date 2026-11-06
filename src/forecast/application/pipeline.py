@@ -37,6 +37,7 @@ from forecast.ingestion.source_graph import build_clusters
 from forecast.model.baseline import compute_baseline
 from forecast.model.likelihoods import build_likelihoods
 from forecast.model.posterior import compute_posterior, sensitivity
+from forecast.providers.npm_browser import read_capture
 from forecast.reports.render import render_report
 
 
@@ -171,7 +172,7 @@ def forecast_once(
         warnings.extend(
             [
                 "UNCALIBRATED: expert_heuristic parameters",
-                "NPM update schedule 13:00 ET is unconfirmed",
+                "NPM schedule is a page claim, not a guarantee; date-only quotes have no precise update timestamp",
             ]
         )
         coverage = coverage_matrix(inputs, cutoff)
@@ -210,6 +211,17 @@ def forecast_once(
             "report.md": report,
             "causal_graph.mmd": mermaid(configs["dag"]),
         }
+        # Embed anchor provenance inside this immutable run; replay must not depend on live files.
+        for source in inputs["sources"]:
+            if source["version_id"] != inputs["anchor"]["source_version_id"]:
+                continue
+            if source.get("metadata_json", {}).get("capture_method") == "public_browser":
+                capture_path = Path(source["archive_uri"])
+                record, _ = read_capture(capture_path)
+                documents["npm_capture.json"] = record
+                for filename in record["artifacts"]:
+                    documents["npm_" + filename] = (capture_path.parent / filename).read_bytes()
+        documents["collection.json"] = collection
         manifest = {
             "schema_version": 1,
             "run_id": run_id,

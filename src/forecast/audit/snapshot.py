@@ -19,11 +19,13 @@ def write_snapshot(root: Path, run_id: str, documents: dict, manifest: dict):
         for name, content in documents.items():
             if Path(name).name != name:
                 raise ValueError("flat artifact filenames required")
-            assert_no_secrets(content)
-            data = content if isinstance(content, str) else stable_json(content)
+            if not isinstance(content, bytes):
+                assert_no_secrets(content)
+            data = content if isinstance(content, (str, bytes)) else stable_json(content)
+            payload = data.encode("utf-8") if isinstance(data, str) else data
             path = temporary / name
-            with path.open("x", encoding="utf-8", newline="\n") as handle:
-                handle.write(data)
+            with path.open("xb") as handle:
+                handle.write(payload)
                 handle.flush()
                 os.fsync(handle.fileno())
             hashes[name] = sha256(path.read_bytes())
@@ -48,5 +50,9 @@ def read_snapshot(path: Path):
         raw = (path / name).read_bytes()
         if sha256(raw) != expected:
             raise ValueError("SNAPSHOT_HASH_MISMATCH: " + name)
-        result[name] = json.loads(raw) if name.endswith(".json") else raw.decode("utf-8")
+        result[name] = (
+            json.loads(raw)
+            if name.endswith(".json")
+            else (raw if name.endswith((".png", ".jpg")) else raw.decode("utf-8"))
+        )
     return manifest, result

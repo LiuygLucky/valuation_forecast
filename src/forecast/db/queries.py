@@ -31,9 +31,18 @@ def freeze_inputs(session, as_of, *, provisional=False, archived=False):
             and obs.unit == "USD_trillion"
         ):
             observations.append(
-                row_dict(obs) | {"source_id": src["source_id"], "captured_at": src["captured_at"]}
+                row_dict(obs)
+                | {
+                    "source_id": src["source_id"],
+                    "captured_at": src["captured_at"],
+                    "effective_timestamp_precision": src["metadata_json"].get(
+                        "effective_timestamp_precision", "timestamp"
+                    ),
+                }
             )
-    observations.sort(key=lambda x: (x["observed_at"], x["captured_at"], x["obs_id"]))
+    observations.sort(
+        key=lambda x: (x["effective_date"], x["observed_at"], x["captured_at"], x["obs_id"])
+    )
     features = []
     for feature in session.scalars(select(FinancialFeature)):
         src = sources[feature.source_version_id]

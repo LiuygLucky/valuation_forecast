@@ -14,8 +14,11 @@ def render_report(
         "固定目标：2026-12-31 NPM Valuation（USD trillion）。研究原型，不用于真实投资决策。",
         f"运行 ID：`{run_id}`；知识截止：`{as_of}`；数据质量：`{baseline['data_quality']}`。",
         "",
-        f"锚点：{anchor['value']}T；来源 `{anchor['source_id']}`；日期 `{anchor['observed_at']}`；"
-        f"年龄 {baseline['anchor_age_days']:.2f} 天。NPM 指示值不等于已成交或已完成融资。",
+        f"锚点：{anchor['value']}T；来源 `{anchor['source_id']}`；指标有效日期 `{anchor['effective_date']}`；"
+        f"有效日期距知识截止 {baseline['anchor_effective_age_calendar_days']} 个纽约日历日。",
+        f"实际观测时间 `{anchor['observed_at']}`；入库版本捕获时间 `{anchor.get('captured_at', anchor['observed_at'])}`。"
+        "页面日期不等于精确更新时间；NPM 指示值不等于已成交或已完成融资。",
+        "公开浏览器采集的复核证据（如适用）：npm_page.png/jpg、npm_page.html、npm_page.txt、npm_capture.json；文件哈希见manifest。",
         "",
         "## 数据状态",
         "",

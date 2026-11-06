@@ -1,8 +1,10 @@
+from datetime import date
+
 import numpy as np
 
 from forecast.domain.bins import BIN_IDS, validate_probabilities
 from forecast.domain.schemas import BaselineOutput
-from forecast.domain.time_policy import local_time, utc
+from forecast.domain.time_policy import ET, local_time, utc
 from forecast.model.priors import validate_priors
 from forecast.model.simulation import mix_samples, summarize
 
@@ -76,4 +78,8 @@ def compute_baseline(anchor: dict, as_of, cfg, priors: dict, quality="VERIFIED")
         "predictive_quantiles": summarize(mixed),
         "h_years": h,
         "anchor_age_days": (cutoff - utc(anchor["observed_at"])).total_seconds() / 86400,
+        "anchor_effective_age_calendar_days": (
+            cutoff.astimezone(ET).date() - date.fromisoformat(anchor["effective_date"])
+        ).days,
+        "anchor_effective_date": anchor["effective_date"],
     }

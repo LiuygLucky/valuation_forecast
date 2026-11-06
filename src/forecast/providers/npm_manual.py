@@ -62,7 +62,7 @@ def import_observation(session, observation: NpmObservation, raw_dir: Path, *, i
             unit="USD_trillion",
             observed_at=utc(observation.observed_at).isoformat(),
             asof_et=observation.observed_at.astimezone(ET).isoformat(),
-            effective_date=observation.observed_on.isoformat(),
+            effective_date=(observation.effective_date or observation.observed_on).isoformat(),
             source_version_id=vid,
             quality_flag=observation.review_status,
             observation_status=observation.review_status,

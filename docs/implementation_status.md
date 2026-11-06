@@ -18,7 +18,7 @@
 - [x] 最终58测试通过；DEMO/REPLAY一致；验收报告、代码版本与交付记录已保存。
 
 ## 真实限制
-无经用户核验的真实NPM观测/档案，提供空白导入模板。旧测试曾向DeepSeek官方域名发送平台密钥，401不能据此证明密钥失效。已用用户指定平台成功调用Qwen3.8-Max：HTTP200，1条合成主张抽取及独立核验通过。NPM页面403，无授权API。所有likelihood/alpha/jump未校准，因果效应未识别，M5校准NOT_FITTED。
+无经用户核验的真实NPM观测/档案，提供空白导入模板。旧测试曾向DeepSeek官方域名发送平台密钥，401不能据此证明密钥失效。已用用户指定平台成功调用Qwen3.8-Max：HTTP200，1条合成主张抽取及独立核验通过。NPM重新检查：普通HTTP200，浏览器无需登录可见Valuation1.281T、有效日2026-11-04；数据库仍0条观测，尚未接入动态页面采集。所有likelihood/alpha/jump未校准，因果效应未识别，M5校准NOT_FITTED。
 
 ## 重连继续
 1. 读本文件、docs/work_log.md、docs/adr/0001-conservative-research-boundaries.md。
@@ -32,7 +32,7 @@
 - DEMO run_id：ff3de36d-8e8d-4a4b-be12-4ed13a104c8a。
 - 报告：docs/demo_report.md；CLI验收：docs/cli_validation.json；测试映射：docs/test_results.md。
 - 启动：双击start_dashboard.bat，或按README命令。
-- 本次代码交付已完成；后续接入真实数据/凭据后再验证实际LIVE与校准。
+- 核心研究原型代码已交付，但不能认定V1全部要求已完成：真实NPM采集/入库、真实LIVE端到端验收及研究增强仍有缺口。
 
 ## 用户追加要求：切换Qwen3.8-Max（2026-11-07）
 - 默认orchestrator和smoke脚本改用QwenExtractor，模型qwen3.8-max；保留schema、核验、预算和概率引擎。
@@ -42,3 +42,9 @@
 - 新代码指纹与旧版本不同，旧快照仍保留；严格重放旧运行需恢复原代码版本。
 
 - Qwen切换验收：61项测试通过、ruff/mypy通过。现有密钥可用，无需更换；正式LIVE仍需真实NPM核验数据。
+
+## NPM访问复核（2026-11-07）
+已从用户指定页面直接看到OpenAI Valuation $1.281T，As of Nov4,2026；不是新闻替代值。纯HTTP只有JS页面框架，浏览器渲染可读，无需登录。当前NPM provider只提供人工导入路径，Qwen仅处理程序传入的摘录。该次核验记录在docs/npm_access_check.json，未将日期精度数据伪造为精确更新时间，也尚未写入observations。后续应接浏览器采集/证据留存并正确区分观测时间与指标有效日期。
+
+## V1完成度复核
+不能把61项自编测试通过或98.72%核心覆盖率等同于完整需求覆盖。NPM adapter当前仅人工导入，没有动态页面采集，已看到的真实值尚未入库；真实LIVE链路未完整验收。财务特征表/覆盖矩阵已有，经营与市场指标自动采集不足；事件依赖保守按指标族合并，复杂交易身份与冲突语义仍简化；回测/消融可运行但仅合成样本，M5没有拟合校准。beta=0、未识别因果效应及未启用PyMC/DoWhy/Darts本身是V1允许的低数据边界，不应误列为强制缺失。

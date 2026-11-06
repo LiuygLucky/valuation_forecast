@@ -1,4 +1,5 @@
 from datetime import UTC, datetime, timedelta
+from pathlib import Path
 from uuid import uuid4
 
 from sqlalchemy import select
@@ -21,8 +22,9 @@ from forecast.db.queries import row_dict
 from forecast.domain.schemas import Claim
 from forecast.domain.time_policy import utc
 from forecast.ingestion.canonicalize import canonical_url
+from forecast.ingestion.npm_capture import ingest_capture
 from forecast.ingestion.versioning import save_source
-from forecast.providers.npm import ManualNpmProvider
+from forecast.providers.npm_browser import NpmBrowserProvider
 from forecast.providers.official_news import PublicArticleRetriever
 from forecast.providers.tavily_search import TavilySearch
 
@@ -54,15 +56,18 @@ def collect_live(engine, search=None, extractor=None, retriever=None, npm=None):
     search = search or TavilySearch()
     extractor = extractor or QwenExtractor()
     retriever = retriever or PublicArticleRetriever()
-    npm = npm or ManualNpmProvider()
+    npm = npm or NpmBrowserProvider()
     config = load_yaml("search_queries.yaml")
     warnings, search_ids, candidates = [], [], []
     now = datetime.now(UTC)
+    npm_result = npm.fetch_latest()
+    npm_import = None
     with Session(engine) as session, session.begin():
-        npm_result = npm.fetch_latest()
         record_health(session, npm_result)
         if npm_result.status != "OK":
             warnings.append(npm_result.status)
+        elif npm_result.data.get("capture_manifest"):
+            npm_import = ingest_capture(session, Path(npm_result.data["capture_manifest"]))
         previous_searches = session.scalars(
             select(SearchRecord).order_by(SearchRecord.requested_at)
         ).all()
@@ -248,6 +253,8 @@ def collect_live(engine, search=None, extractor=None, retriever=None, npm=None):
             "NO_EVIDENCE: no new verified claims; existing eligible evidence may still apply"
         )
     return {
+        "npm_import": npm_import,
+        "npm_status": npm_result.status,
         "warnings": sorted(set(warnings)),
         "search_ids": search_ids,
         "llm_documents": llm_count,
