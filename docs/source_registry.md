@@ -16,3 +16,10 @@
 - [NPM目标页](https://fe.secondmarket.com/companies/company-30839e0b-2730-4495-839f-1bf638fa9cca/data) 未取得合格估值，不推断价格。
 
 真实验证保存在api_smoke.json，不含密钥、认证头或原始错误响应。服务可访问性不等于预测准确性。
+
+## Qwen migration and diagnosis correction
+User selected Qwen3.8-Max instead of DeepSeek. Previous DeepSeek-domain HTTP401 cannot establish whether the platform key is valid or whether a model is down. Default QwenCloud Singapore smoke also returned401; actual account endpoint/region requires confirmation. Current result:api_smoke_qwen.json.
+
+Official references: [first API call](https://docs.qwencloud.com/developer-guides/getting-started/first-api-call), [model ID](https://docs.qwencloud.com/models/qwen3-8-max), [JSON output](https://docs.qwencloud.com/developer-guides/text-generation/structured-output), [thinking parameters](https://docs.qwencloud.com/developer-guides/text-generation/thinking).
+
+Final endpoint confirmed by user:https://maas.qianwenaiapi.com/compatible-mode/v1. Real Qwen3.8-Max HTTP200,1 synthetic claim extracted and verified. Existing credential is usable. Current smoke supersedes endpoint-diagnosis uncertainty; original observations remain historical records.

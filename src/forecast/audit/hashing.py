@@ -30,7 +30,7 @@ def object_hash(value) -> str:
 
 
 def redact(text: str) -> str:
-    for name in ("DEEPSEEK_API_KEY", "TAVILY_API_KEY"):
+    for name in ("QWEN_API_KEY", "DASHSCOPE_API_KEY", "DEEPSEEK_API_KEY", "TAVILY_API_KEY"):
         secret = os.getenv(name)
         if secret:
             text = text.replace(secret, "[REDACTED]")

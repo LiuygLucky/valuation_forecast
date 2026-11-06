@@ -21,3 +21,6 @@ JSON为 `{"tasks": [AuxiliaryTask, ...]}`；完整合成例见tests/fixtures/syn
 - 严格档案需archive_capture_at/archive_verified/archive_uri/metadata_json.artifact_sha256；不能回填first_seen_at伪装过去。
 
 M0–M5同任务/seed/截止，记录证据数、耗时、失败、离线API成本0和样本量。不同指标、来源和实验等级分组。少于默认100个辅助样本不提供ECE；足量后才提供有桶样本量的描述性top-label ECE。本版本校准NOT_FITTED。
+
+## Qwen3.8-Max override (2026-11-07)
+Default extraction provider is QwenCloud/QwenExtractor; model defaults to qwen3.8-max. Read QWEN_API_KEY or DASHSCOPE_API_KEY; QWEN_MODEL and QWEN_BASE_URL override model/regional compatibility root. Never reuse a legacy credential implicitly in provider code. The local .env migration explicitly reused the key under the user instruction. Requests use enable_thinking=false, max_completion_tokens=2500 and JSON object; initial attempt plus two schema retries. DeepSeekExtractor remains an explicit legacy adapter only.

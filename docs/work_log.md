@@ -38,3 +38,15 @@
 - Final synthetic backtest:2 tasks,12 records,0 failures; unavailable real dataset rejected.
 - Secret scan found no supplied API keys in code/config/docs/tests/templates/dashboard/scripts/migrations.
 - No unresolved automated test failures. Real-data/calibration limitations persist and are documented, not filled with fiction.
+
+## Iteration 4 — Qwen switch requested by user
+- User reports existing key is valid and upstream DeepSeek-V4-Pro is down; requests Qwen3.8-Max.
+- Corrected earlier diagnosis: HTTP401 from api.deepseek.com does not prove platform credential invalid.
+- Added shared JSON extractor/Qwen adapter, configurable regional endpoint, Qwen secret redaction; default pipeline and smoke now Qwen.
+- Migrated local ignored .env to QWEN_* with existing platform key. No key emitted.
+- Mock provider suite:9 passed. Real QwenCloud Singapore smoke:401; Tavily200. Asked for actual platform/Base URL; no further endpoints probed.
+- Full regression/static checks pending result recording below.
+
+- User supplied actual endpoint:https://maas.qianwenaiapi.com/compatible-mode/v1. Updated .env and checked-in defaults/example.
+- Real smoke succeeded HTTP200; qwen3.8-max extracted1 synthetic claim; independent verifier accepted1;1324 total tokens. Existing key confirmed usable.
+- Full regression:61 passed,0 failed; core coverage98.72%;mypy57 source files clean. No numerical forecasting changes.

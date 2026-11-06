@@ -4,7 +4,7 @@ from uuid import uuid4
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from forecast.agent.extractor import DeepSeekExtractor
+from forecast.agent.extractor import QwenExtractor
 from forecast.agent.verifier import verify_claim
 from forecast.audit.hashing import object_hash, redact
 from forecast.config import load_yaml
@@ -52,7 +52,7 @@ def record_health(session, result):
 
 def collect_live(engine, search=None, extractor=None, retriever=None, npm=None):
     search = search or TavilySearch()
-    extractor = extractor or DeepSeekExtractor()
+    extractor = extractor or QwenExtractor()
     retriever = retriever or PublicArticleRetriever()
     npm = npm or ManualNpmProvider()
     config = load_yaml("search_queries.yaml")

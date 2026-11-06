@@ -7,7 +7,7 @@
 ## 当前状态
 
 - Python 包、SQLite/Alembic、NPM 人工导入、金融基线、Evidence Agent、DAG、审计快照、CLI、Streamlit、结算评分、回测和消融接口已实现。
-- 真实接口记录见 [docs/api_smoke.json](docs/api_smoke.json)：Tavily 成功；提供的 DeepSeek 凭据返回 HTTP 401，需要有效的 DeepSeek 官方 API 凭据。
+- 默认 LLM 已按用户要求切换为 **Qwen3.8-Max**（`qwen3.8-max`）。Tavily 和用户指定接口上的 Qwen 均已返回 HTTP200；Qwen抽取的1条合成测试主张通过独立核验。现有平台密钥有效。记录见 [docs/api_smoke_qwen.json](docs/api_smoke_qwen.json)。
 - 未提供经核验真实 NPM 观测/历史档案，LIVE 报告 NO_VALID_ANCHOR；禁止样例价格填缺口。
 - 重连入口：[实施清单](docs/implementation_status.md)、[工作记录](docs/work_log.md)。验收结果见 [docs/test_results.md](docs/test_results.md)。
 
@@ -19,7 +19,9 @@ python -m venv .venv
 Copy-Item .env.example .env
 ```
 
-已有 `.env` 时保留它。只在 `.env` 或环境变量中设置 TAVILY_API_KEY、DEEPSEEK_API_KEY。原 prompt 含凭据，`.gitignore` 同时排除 `.env` 和 `Prompt_V1.md`；代码、日志和 manifest 不复制凭据。
+已有 `.env` 时保留它。只在 `.env` 或环境变量中设置 TAVILY_API_KEY、QWEN_API_KEY（也支持 DASHSCOPE_API_KEY）。原 prompt 含凭据，`.gitignore` 同时排除 `.env` 和 `Prompt_V1.md`；代码、日志和 manifest 不复制凭据。
+
+Qwen 使用 `QWEN_MODEL=qwen3.8-max`、`QWEN_BASE_URL` 指定平台/区域的 OpenAI 兼容 API 根路径（不带 `/chat/completions`）。默认是 `https://maas.qianwenaiapi.com/compatible-mode/v1`；密钥必须与实际平台/区域匹配。保留 DeepSeek adapter 供显式注入，不自动回退。
 
 严格锁定依赖：
 

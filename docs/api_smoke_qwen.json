@@ -1,0 +1,38 @@
+{
+  "checked_at": "2026-11-06T21:21:58.490201+00:00",
+  "synthetic_llm_input": true,
+  "providers": [
+    {
+      "provider": "Tavily",
+      "status": "OK",
+      "http_status": 200,
+      "reason": null,
+      "usage": null,
+      "model_id": null,
+      "base_url": null,
+      "claim_count": null,
+      "verified_claim_count": 0,
+      "response_sha256": "0ab976020059a5a5c81eeaaba240898c45cca75545de27c5535639f1dfadc6ee"
+    },
+    {
+      "provider": "QwenCloud",
+      "status": "OK",
+      "http_status": 200,
+      "reason": null,
+      "usage": {
+        "prompt_tokens": 1094,
+        "total_tokens": 1324,
+        "completion_tokens": 230,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "text_tokens": 1094
+        }
+      },
+      "model_id": "qwen3.8-max",
+      "base_url": "https://maas.qianwenaiapi.com/compatible-mode/v1",
+      "claim_count": 1,
+      "verified_claim_count": 1,
+      "response_sha256": "d7222046858f49b88ce85d99d405d385c19ba515ca86836a7c221928de3926ef"
+    }
+  ]
+}

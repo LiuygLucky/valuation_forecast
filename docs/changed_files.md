@@ -112,3 +112,14 @@
 - `tests/unit/test_model_evidence.py`
 - `tests/unit/test_providers.py`
 - `uv.lock`
+
+## Qwen增量改动
+
+- `.env.example`、`README.md`
+- `src/forecast/agent/extractor.py`、`src/forecast/agent/orchestrator.py`
+- `src/forecast/audit/hashing.py`、`scripts/smoke_providers.py`
+- `tests/unit/test_qwen.py`
+- `docs/adr/0002-qwen-provider.md`、`docs/api_smoke_qwen.json`
+- `docs/api_contracts.md`、`docs/source_registry.md`、`docs/test_results.md`、`docs/test_results.xml`、`docs/coverage.json`
+- `docs/implementation_status.md`、`docs/work_log.md`、本清单
+- 本地`.env`（被忽略；现有密钥和确认的Base URL）
