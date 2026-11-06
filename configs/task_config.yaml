@@ -1,0 +1,21 @@
+task_id: openai_npm_valuation_20261231
+question: OpenAI 在2026年12月31日的 NPM Valuation 将落在哪个区间？
+company: OpenAI
+metric: npm_valuation
+metric_url: https://fe.secondmarket.com/companies/company-30839e0b-2730-4495-839f-1bf638fa9cca/data
+currency: USD
+internal_unit: USD_trillion
+business_timezone: America/New_York
+prediction_freeze_local: '2026-12-31T12:59:59'
+settlement_target_date: '2026-12-31'
+source_update_time_local_claimed: '13:00'
+intervals:
+  - {id: B1, label: '<0.85', lower: null, upper: 0.85, lower_closed: false, upper_closed: false}
+  - {id: B2, label: '0.85–1.00', lower: 0.85, upper: 1.00, lower_closed: true, upper_closed: false}
+  - {id: B3, label: '1.00–1.15', lower: 1.00, upper: 1.15, lower_closed: true, upper_closed: false}
+  - {id: B4, label: '1.15–1.30', lower: 1.15, upper: 1.30, lower_closed: true, upper_closed: false}
+  - {id: B5, label: '1.30–1.45', lower: 1.30, upper: 1.45, lower_closed: true, upper_closed: true}
+  - {id: B6, label: '>1.45', lower: 1.45, upper: null, lower_closed: false, upper_closed: false}
+seed: 20261107
+monte_carlo_samples: 20000
+model_revision: v1.0

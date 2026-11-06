@@ -1,0 +1,41 @@
+version: dag-v1
+validation_status: causal_effect_not_identified
+confounders: [macro_risk_appetite, selection_into_secondary_trading]
+edges:
+  - {id: H01, cause: market_risk_appetite_t, effect: private_market_multiples_t1, meaning: market risk affects multiples, lag_days: [0, 30], parameter_source: expert_heuristic, identifiable: false}
+  - {id: H02, cause: private_market_multiples_t1, effect: npm_valuation_T, meaning: multiples affect indicative quotes, lag_days: [0, 60], parameter_source: expert_heuristic, identifiable: false}
+  - {id: H03, cause: financing_terms_t, effect: financing_anchor_t1, meaning: terms and status form a financing reference, lag_days: [0, 30], parameter_source: expert_heuristic, identifiable: false}
+  - {id: H04, cause: financing_anchor_t1, effect: npm_valuation_T, meaning: partial delayed pass through to NPM, lag_days: [0, 60], parameter_source: expert_heuristic, identifiable: false}
+  - {id: H05, cause: customer_demand_t, effect: revenue_growth_t1, meaning: demand drives revenue, lag_days: [0, 90], parameter_source: expert_heuristic, identifiable: false}
+  - {id: H06, cause: revenue_growth_t1, effect: valuation_fundamentals_t2, meaning: growth affects fundamentals, lag_days: [0, 90], parameter_source: expert_heuristic, identifiable: false}
+  - {id: H07, cause: valuation_fundamentals_t2, effect: npm_valuation_T, meaning: fundamentals can influence NPM, lag_days: [0, 90], parameter_source: expert_heuristic, identifiable: false}
+  - {id: H08, cause: customer_demand_t, effect: compute_usage_t1, meaning: demand raises compute usage, lag_days: [0, 30], parameter_source: expert_heuristic, identifiable: false}
+  - {id: H09, cause: compute_usage_t1, effect: compute_spend_t2, meaning: usage affects spend, lag_days: [0, 30], parameter_source: expert_heuristic, identifiable: false}
+  - {id: H10, cause: compute_unit_cost_t, effect: compute_spend_t2, meaning: unit costs affect spend, lag_days: [0, 30], parameter_source: expert_heuristic, identifiable: false}
+  - {id: H11, cause: compute_spend_t2, effect: cash_burn_t3, meaning: spend contributes to burn, lag_days: [0, 30], parameter_source: expert_heuristic, identifiable: false}
+  - {id: H12, cause: cash_burn_t3, effect: financing_need_t4, meaning: burn may raise financing need, lag_days: [0, 30], parameter_source: expert_heuristic, identifiable: false}
+  - {id: H13, cause: financing_need_t4, effect: financing_terms_t5, meaning: financing need affects later terms, lag_days: [0, 60], parameter_source: expert_heuristic, identifiable: false}
+  - {id: H14, cause: competition_t, effect: expected_growth_and_margins_t1, meaning: competition affects expectations, lag_days: [0, 90], parameter_source: expert_heuristic, identifiable: false}
+  - {id: H15, cause: expected_growth_and_margins_t1, effect: valuation_fundamentals_t2, meaning: expectations affect fundamentals, lag_days: [0, 60], parameter_source: expert_heuristic, identifiable: false}
+  - {id: H16, cause: npm_market_liquidity_t, effect: quoted_secondary_indicator_t1, meaning: liquidity affects indicative quotes, lag_days: [0, 30], parameter_source: expert_heuristic, identifiable: false}
+  - {id: H17, cause: quoted_secondary_indicator_t1, effect: npm_valuation_T, meaning: secondary indicator influences NPM, lag_days: [0, 30], parameter_source: expert_heuristic, identifiable: false}
+  - {id: H18, cause: information_publication_t, effect: investor_beliefs_t1, meaning: public information changes beliefs, lag_days: [0, 30], parameter_source: expert_heuristic, identifiable: false}
+  - {id: H19, cause: investor_beliefs_t1, effect: npm_valuation_T, meaning: beliefs influence indicative quotes, lag_days: [0, 60], parameter_source: expert_heuristic, identifiable: false}
+  - {id: H20, cause: market_risk_appetite_t, effect: financing_anchor_t1, meaning: macro conditions confound funding and quotes, lag_days: [0, 60], parameter_source: expert_heuristic, identifiable: false}
+mechanisms:
+  financing_valuation_anchor:
+    claim_types: [financing_valuation_target, financing_completed]
+    drivers: [financing_terms_t]
+    path: [H03, H04]
+    effect_channel: scenario_weight
+  growth_fundamentals:
+    claim_types: [revenue]
+    drivers: [customer_demand_t]
+    path: [H05, H06, H07]
+    effect_channel: scenario_weight
+  compute_cash_burn:
+    claim_types: [compute_cost]
+    drivers: [compute_unit_cost_t]
+    path: [H10, H11, H12, H13]
+    effect_channel: scenario_weight
+parameter_update_mapping: {}

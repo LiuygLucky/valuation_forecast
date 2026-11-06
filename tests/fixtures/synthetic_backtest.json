@@ -1,0 +1,719 @@
+{
+  "synthetic": true,
+  "tasks": [
+    {
+      "task_id": "synthetic_aux_0",
+      "company": "OpenAI (synthetic)",
+      "metric": "npm_valuation",
+      "source_family": "SYNTHETIC",
+      "experiment": "SYNTHETIC",
+      "as_of": "2026-10-01T17:00:00Z",
+      "target_date": "2026-12-31",
+      "settlement_value": "1.45",
+      "settlement_effective_date": "2026-12-31",
+      "settlement_archive_uri": "",
+      "settlement_sha256": "",
+      "event_families": [
+        "synthetic_shared"
+      ],
+      "inputs": {
+        "anchor": {
+          "obs_id": "synthetic_anchor",
+          "value": "1.20",
+          "metric_name": "npm_valuation",
+          "unit": "USD_trillion",
+          "observed_at": "2026-09-28T17:00:00+00:00",
+          "effective_date": "2026-09-28",
+          "source_id": "synthetic_npm",
+          "source_version_id": "synthetic_npm_v1",
+          "quality_flag": "SYNTHETIC",
+          "synthetic": true,
+          "methodology": "Fictional illustrative anchor; not NPM history"
+        },
+        "observations": [
+          {
+            "obs_id": "synthetic_anchor",
+            "value": "1.20",
+            "metric_name": "npm_valuation",
+            "unit": "USD_trillion",
+            "observed_at": "2026-09-28T17:00:00+00:00",
+            "effective_date": "2026-09-28",
+            "source_id": "synthetic_npm",
+            "source_version_id": "synthetic_npm_v1",
+            "quality_flag": "SYNTHETIC",
+            "synthetic": true,
+            "methodology": "Fictional illustrative anchor; not NPM history"
+          }
+        ],
+        "features": [],
+        "claims": [
+          {
+            "claim_id": "synthetic_claim_accepted",
+            "claim_json": {
+              "source_ids": [
+                "synthetic_accepted"
+              ],
+              "entity": "OpenAI",
+              "claim_type": "financing_valuation_target",
+              "event_cluster_id": "fictional_round",
+              "event_status": "proposed",
+              "event_at": null,
+              "effective_at": null,
+              "published_at": "2026-09-30T17:00:00+00:00",
+              "valuation_basis": "post_money",
+              "reported_valuation_trillion": "1.4",
+              "supporting_quote": "OpenAI proposed a financing at a post-money valuation of $1.4 trillion.",
+              "quote_location": "synthetic paragraph 1",
+              "supported": true,
+              "causal_mechanisms": [
+                "financing_valuation_anchor"
+              ],
+              "direction": "uncertain",
+              "uncertainty_notes": [
+                "SYNTHETIC; no actual event"
+              ],
+              "scenario_tags": [],
+              "drivers": [],
+              "mechanism_path_ids": [],
+              "alternative_explanations": [
+                "Proposed transaction may never close; growth may raise costs."
+              ],
+              "hypothesis": "Illustrative uncalibrated mechanism",
+              "synthetic": true
+            },
+            "verification_status": "VERIFIED",
+            "source": {
+              "source_id": "synthetic_accepted",
+              "version_id": "synthetic_accepted_v1",
+              "canonical_url": "https://example.invalid/synthetic/accepted",
+              "first_public_at": "2026-09-30T17:00:00+00:00",
+              "published_at": "2026-09-30T17:00:00+00:00",
+              "first_seen_at": "2026-09-30T17:00:00+00:00",
+              "captured_at": "2026-09-30T17:00:00+00:00",
+              "retrieved_at": "2026-09-30T17:00:00+00:00",
+              "source_type": "official_primary",
+              "publisher": "SYNTHETIC FIXTURE",
+              "raw_excerpt": "OpenAI proposed a financing at a post-money valuation of $1.4 trillion.",
+              "content_sha256": "53e930c3b096351ce0a5aa65596d5ebf7adbe98f9fd213d310c035bd72dd5ad8",
+              "synthetic": true,
+              "title": "SYNTHETIC OpenAI example",
+              "access_status": "ACCESSIBLE",
+              "origin_group_id": "fictional_round",
+              "metadata_json": {},
+              "parent_source_id": null
+            }
+          },
+          {
+            "claim_id": "synthetic_claim_duplicate",
+            "claim_json": {
+              "source_ids": [
+                "synthetic_duplicate"
+              ],
+              "entity": "OpenAI",
+              "claim_type": "financing_valuation_target",
+              "event_cluster_id": "fictional_round",
+              "event_status": "proposed",
+              "event_at": null,
+              "effective_at": null,
+              "published_at": "2026-09-30T17:00:00+00:00",
+              "valuation_basis": "post_money",
+              "reported_valuation_trillion": "1.4",
+              "supporting_quote": "OpenAI proposed a financing at a post-money valuation of $1.4 trillion.",
+              "quote_location": "synthetic paragraph 1",
+              "supported": true,
+              "causal_mechanisms": [
+                "financing_valuation_anchor"
+              ],
+              "direction": "uncertain",
+              "uncertainty_notes": [
+                "SYNTHETIC; no actual event"
+              ],
+              "scenario_tags": [],
+              "drivers": [],
+              "mechanism_path_ids": [],
+              "alternative_explanations": [
+                "Proposed transaction may never close; growth may raise costs."
+              ],
+              "hypothesis": "Illustrative uncalibrated mechanism",
+              "synthetic": true
+            },
+            "verification_status": "VERIFIED",
+            "source": {
+              "source_id": "synthetic_duplicate",
+              "version_id": "synthetic_duplicate_v1",
+              "canonical_url": "https://example.invalid/synthetic/duplicate",
+              "first_public_at": "2026-09-30T17:00:00+00:00",
+              "published_at": "2026-09-30T17:00:00+00:00",
+              "first_seen_at": "2026-09-30T17:00:00+00:00",
+              "captured_at": "2026-09-30T17:00:00+00:00",
+              "retrieved_at": "2026-09-30T17:00:00+00:00",
+              "source_type": "syndicated",
+              "publisher": "SYNTHETIC FIXTURE",
+              "raw_excerpt": "OpenAI proposed a financing at a post-money valuation of $1.4 trillion.",
+              "content_sha256": "53e930c3b096351ce0a5aa65596d5ebf7adbe98f9fd213d310c035bd72dd5ad8",
+              "synthetic": true,
+              "title": "SYNTHETIC OpenAI example",
+              "access_status": "ACCESSIBLE",
+              "origin_group_id": "fictional_round",
+              "metadata_json": {},
+              "parent_source_id": "synthetic_accepted"
+            }
+          },
+          {
+            "claim_id": "synthetic_claim_future",
+            "claim_json": {
+              "source_ids": [
+                "synthetic_future"
+              ],
+              "entity": "OpenAI",
+              "claim_type": "financing_valuation_target",
+              "event_cluster_id": "future_round",
+              "event_status": "proposed",
+              "event_at": null,
+              "effective_at": null,
+              "published_at": "2026-10-02T17:00:00+00:00",
+              "valuation_basis": "post_money",
+              "reported_valuation_trillion": "1.4",
+              "supporting_quote": "OpenAI proposed a financing at a post-money valuation of $1.4 trillion.",
+              "quote_location": "synthetic paragraph 1",
+              "supported": true,
+              "causal_mechanisms": [
+                "financing_valuation_anchor"
+              ],
+              "direction": "uncertain",
+              "uncertainty_notes": [
+                "SYNTHETIC; no actual event"
+              ],
+              "scenario_tags": [],
+              "drivers": [],
+              "mechanism_path_ids": [],
+              "alternative_explanations": [
+                "Proposed transaction may never close; growth may raise costs."
+              ],
+              "hypothesis": "Illustrative uncalibrated mechanism",
+              "synthetic": true
+            },
+            "verification_status": "VERIFIED",
+            "source": {
+              "source_id": "synthetic_future",
+              "version_id": "synthetic_future_v1",
+              "canonical_url": "https://example.invalid/synthetic/future",
+              "first_public_at": "2026-10-02T17:00:00+00:00",
+              "published_at": "2026-10-02T17:00:00+00:00",
+              "first_seen_at": "2026-10-02T17:00:00+00:00",
+              "captured_at": "2026-10-02T17:00:00+00:00",
+              "retrieved_at": "2026-10-02T17:00:00+00:00",
+              "source_type": "official_primary",
+              "publisher": "SYNTHETIC FIXTURE",
+              "raw_excerpt": "OpenAI proposed a financing at a post-money valuation of $1.4 trillion.",
+              "content_sha256": "53e930c3b096351ce0a5aa65596d5ebf7adbe98f9fd213d310c035bd72dd5ad8",
+              "synthetic": true,
+              "title": "SYNTHETIC OpenAI example",
+              "access_status": "ACCESSIBLE",
+              "origin_group_id": "future_round",
+              "metadata_json": {},
+              "parent_source_id": null
+            }
+          },
+          {
+            "claim_id": "synthetic_claim_absorbed",
+            "claim_json": {
+              "source_ids": [
+                "synthetic_absorbed"
+              ],
+              "entity": "OpenAI",
+              "claim_type": "revenue",
+              "event_cluster_id": "old_growth",
+              "event_status": "proposed",
+              "event_at": null,
+              "effective_at": null,
+              "published_at": "2026-09-26T17:00:00+00:00",
+              "valuation_basis": "post_money",
+              "reported_valuation_trillion": null,
+              "supporting_quote": "OpenAI reported growth in enterprise revenue.",
+              "quote_location": "synthetic paragraph 1",
+              "supported": true,
+              "causal_mechanisms": [
+                "growth_fundamentals"
+              ],
+              "direction": "uncertain",
+              "uncertainty_notes": [
+                "SYNTHETIC; no actual event"
+              ],
+              "scenario_tags": [],
+              "drivers": [],
+              "mechanism_path_ids": [],
+              "alternative_explanations": [
+                "Proposed transaction may never close; growth may raise costs."
+              ],
+              "hypothesis": "Illustrative uncalibrated mechanism",
+              "synthetic": true
+            },
+            "verification_status": "VERIFIED",
+            "source": {
+              "source_id": "synthetic_absorbed",
+              "version_id": "synthetic_absorbed_v1",
+              "canonical_url": "https://example.invalid/synthetic/absorbed",
+              "first_public_at": "2026-09-26T17:00:00+00:00",
+              "published_at": "2026-09-26T17:00:00+00:00",
+              "first_seen_at": "2026-09-26T17:00:00+00:00",
+              "captured_at": "2026-09-26T17:00:00+00:00",
+              "retrieved_at": "2026-09-26T17:00:00+00:00",
+              "source_type": "official_primary",
+              "publisher": "SYNTHETIC FIXTURE",
+              "raw_excerpt": "OpenAI reported growth in enterprise revenue.",
+              "content_sha256": "a7ba1dbb407e7c2e3a6d4e45bdf354c2df951cb0c87b39536f9dd0e65d0207d2",
+              "synthetic": true,
+              "title": "SYNTHETIC OpenAI example",
+              "access_status": "ACCESSIBLE",
+              "origin_group_id": "old_growth",
+              "metadata_json": {},
+              "parent_source_id": null
+            }
+          }
+        ],
+        "sources": [
+          {
+            "source_id": "synthetic_accepted",
+            "version_id": "synthetic_accepted_v1",
+            "canonical_url": "https://example.invalid/synthetic/accepted",
+            "first_public_at": "2026-09-30T17:00:00+00:00",
+            "published_at": "2026-09-30T17:00:00+00:00",
+            "first_seen_at": "2026-09-30T17:00:00+00:00",
+            "captured_at": "2026-09-30T17:00:00+00:00",
+            "retrieved_at": "2026-09-30T17:00:00+00:00",
+            "source_type": "official_primary",
+            "publisher": "SYNTHETIC FIXTURE",
+            "raw_excerpt": "OpenAI proposed a financing at a post-money valuation of $1.4 trillion.",
+            "content_sha256": "53e930c3b096351ce0a5aa65596d5ebf7adbe98f9fd213d310c035bd72dd5ad8",
+            "synthetic": true,
+            "title": "SYNTHETIC OpenAI example",
+            "access_status": "ACCESSIBLE",
+            "origin_group_id": "fictional_round",
+            "metadata_json": {},
+            "parent_source_id": null
+          },
+          {
+            "source_id": "synthetic_duplicate",
+            "version_id": "synthetic_duplicate_v1",
+            "canonical_url": "https://example.invalid/synthetic/duplicate",
+            "first_public_at": "2026-09-30T17:00:00+00:00",
+            "published_at": "2026-09-30T17:00:00+00:00",
+            "first_seen_at": "2026-09-30T17:00:00+00:00",
+            "captured_at": "2026-09-30T17:00:00+00:00",
+            "retrieved_at": "2026-09-30T17:00:00+00:00",
+            "source_type": "syndicated",
+            "publisher": "SYNTHETIC FIXTURE",
+            "raw_excerpt": "OpenAI proposed a financing at a post-money valuation of $1.4 trillion.",
+            "content_sha256": "53e930c3b096351ce0a5aa65596d5ebf7adbe98f9fd213d310c035bd72dd5ad8",
+            "synthetic": true,
+            "title": "SYNTHETIC OpenAI example",
+            "access_status": "ACCESSIBLE",
+            "origin_group_id": "fictional_round",
+            "metadata_json": {},
+            "parent_source_id": "synthetic_accepted"
+          },
+          {
+            "source_id": "synthetic_future",
+            "version_id": "synthetic_future_v1",
+            "canonical_url": "https://example.invalid/synthetic/future",
+            "first_public_at": "2026-10-02T17:00:00+00:00",
+            "published_at": "2026-10-02T17:00:00+00:00",
+            "first_seen_at": "2026-10-02T17:00:00+00:00",
+            "captured_at": "2026-10-02T17:00:00+00:00",
+            "retrieved_at": "2026-10-02T17:00:00+00:00",
+            "source_type": "official_primary",
+            "publisher": "SYNTHETIC FIXTURE",
+            "raw_excerpt": "OpenAI proposed a financing at a post-money valuation of $1.4 trillion.",
+            "content_sha256": "53e930c3b096351ce0a5aa65596d5ebf7adbe98f9fd213d310c035bd72dd5ad8",
+            "synthetic": true,
+            "title": "SYNTHETIC OpenAI example",
+            "access_status": "ACCESSIBLE",
+            "origin_group_id": "future_round",
+            "metadata_json": {},
+            "parent_source_id": null
+          },
+          {
+            "source_id": "synthetic_absorbed",
+            "version_id": "synthetic_absorbed_v1",
+            "canonical_url": "https://example.invalid/synthetic/absorbed",
+            "first_public_at": "2026-09-26T17:00:00+00:00",
+            "published_at": "2026-09-26T17:00:00+00:00",
+            "first_seen_at": "2026-09-26T17:00:00+00:00",
+            "captured_at": "2026-09-26T17:00:00+00:00",
+            "retrieved_at": "2026-09-26T17:00:00+00:00",
+            "source_type": "official_primary",
+            "publisher": "SYNTHETIC FIXTURE",
+            "raw_excerpt": "OpenAI reported growth in enterprise revenue.",
+            "content_sha256": "a7ba1dbb407e7c2e3a6d4e45bdf354c2df951cb0c87b39536f9dd0e65d0207d2",
+            "synthetic": true,
+            "title": "SYNTHETIC OpenAI example",
+            "access_status": "ACCESSIBLE",
+            "origin_group_id": "old_growth",
+            "metadata_json": {},
+            "parent_source_id": null
+          }
+        ]
+      },
+      "seed": 20261107,
+      "monte_carlo_samples": 20000
+    },
+    {
+      "task_id": "synthetic_aux_1",
+      "company": "OpenAI (synthetic)",
+      "metric": "npm_valuation",
+      "source_family": "SYNTHETIC",
+      "experiment": "SYNTHETIC",
+      "as_of": "2026-11-07T17:00:00Z",
+      "target_date": "2026-12-31",
+      "settlement_value": "1.45",
+      "settlement_effective_date": "2026-12-31",
+      "settlement_archive_uri": "",
+      "settlement_sha256": "",
+      "event_families": [
+        "synthetic_shared"
+      ],
+      "inputs": {
+        "anchor": {
+          "obs_id": "synthetic_anchor",
+          "value": "1.20",
+          "metric_name": "npm_valuation",
+          "unit": "USD_trillion",
+          "observed_at": "2026-11-04T17:00:00+00:00",
+          "effective_date": "2026-11-04",
+          "source_id": "synthetic_npm",
+          "source_version_id": "synthetic_npm_v1",
+          "quality_flag": "SYNTHETIC",
+          "synthetic": true,
+          "methodology": "Fictional illustrative anchor; not NPM history"
+        },
+        "observations": [
+          {
+            "obs_id": "synthetic_anchor",
+            "value": "1.20",
+            "metric_name": "npm_valuation",
+            "unit": "USD_trillion",
+            "observed_at": "2026-11-04T17:00:00+00:00",
+            "effective_date": "2026-11-04",
+            "source_id": "synthetic_npm",
+            "source_version_id": "synthetic_npm_v1",
+            "quality_flag": "SYNTHETIC",
+            "synthetic": true,
+            "methodology": "Fictional illustrative anchor; not NPM history"
+          }
+        ],
+        "features": [],
+        "claims": [
+          {
+            "claim_id": "synthetic_claim_accepted",
+            "claim_json": {
+              "source_ids": [
+                "synthetic_accepted"
+              ],
+              "entity": "OpenAI",
+              "claim_type": "financing_valuation_target",
+              "event_cluster_id": "fictional_round",
+              "event_status": "proposed",
+              "event_at": null,
+              "effective_at": null,
+              "published_at": "2026-11-06T17:00:00+00:00",
+              "valuation_basis": "post_money",
+              "reported_valuation_trillion": "1.4",
+              "supporting_quote": "OpenAI proposed a financing at a post-money valuation of $1.4 trillion.",
+              "quote_location": "synthetic paragraph 1",
+              "supported": true,
+              "causal_mechanisms": [
+                "financing_valuation_anchor"
+              ],
+              "direction": "uncertain",
+              "uncertainty_notes": [
+                "SYNTHETIC; no actual event"
+              ],
+              "scenario_tags": [],
+              "drivers": [],
+              "mechanism_path_ids": [],
+              "alternative_explanations": [
+                "Proposed transaction may never close; growth may raise costs."
+              ],
+              "hypothesis": "Illustrative uncalibrated mechanism",
+              "synthetic": true
+            },
+            "verification_status": "VERIFIED",
+            "source": {
+              "source_id": "synthetic_accepted",
+              "version_id": "synthetic_accepted_v1",
+              "canonical_url": "https://example.invalid/synthetic/accepted",
+              "first_public_at": "2026-11-06T17:00:00+00:00",
+              "published_at": "2026-11-06T17:00:00+00:00",
+              "first_seen_at": "2026-11-06T17:00:00+00:00",
+              "captured_at": "2026-11-06T17:00:00+00:00",
+              "retrieved_at": "2026-11-06T17:00:00+00:00",
+              "source_type": "official_primary",
+              "publisher": "SYNTHETIC FIXTURE",
+              "raw_excerpt": "OpenAI proposed a financing at a post-money valuation of $1.4 trillion.",
+              "content_sha256": "53e930c3b096351ce0a5aa65596d5ebf7adbe98f9fd213d310c035bd72dd5ad8",
+              "synthetic": true,
+              "title": "SYNTHETIC OpenAI example",
+              "access_status": "ACCESSIBLE",
+              "origin_group_id": "fictional_round",
+              "metadata_json": {},
+              "parent_source_id": null
+            }
+          },
+          {
+            "claim_id": "synthetic_claim_duplicate",
+            "claim_json": {
+              "source_ids": [
+                "synthetic_duplicate"
+              ],
+              "entity": "OpenAI",
+              "claim_type": "financing_valuation_target",
+              "event_cluster_id": "fictional_round",
+              "event_status": "proposed",
+              "event_at": null,
+              "effective_at": null,
+              "published_at": "2026-11-06T17:00:00+00:00",
+              "valuation_basis": "post_money",
+              "reported_valuation_trillion": "1.4",
+              "supporting_quote": "OpenAI proposed a financing at a post-money valuation of $1.4 trillion.",
+              "quote_location": "synthetic paragraph 1",
+              "supported": true,
+              "causal_mechanisms": [
+                "financing_valuation_anchor"
+              ],
+              "direction": "uncertain",
+              "uncertainty_notes": [
+                "SYNTHETIC; no actual event"
+              ],
+              "scenario_tags": [],
+              "drivers": [],
+              "mechanism_path_ids": [],
+              "alternative_explanations": [
+                "Proposed transaction may never close; growth may raise costs."
+              ],
+              "hypothesis": "Illustrative uncalibrated mechanism",
+              "synthetic": true
+            },
+            "verification_status": "VERIFIED",
+            "source": {
+              "source_id": "synthetic_duplicate",
+              "version_id": "synthetic_duplicate_v1",
+              "canonical_url": "https://example.invalid/synthetic/duplicate",
+              "first_public_at": "2026-11-06T17:00:00+00:00",
+              "published_at": "2026-11-06T17:00:00+00:00",
+              "first_seen_at": "2026-11-06T17:00:00+00:00",
+              "captured_at": "2026-11-06T17:00:00+00:00",
+              "retrieved_at": "2026-11-06T17:00:00+00:00",
+              "source_type": "syndicated",
+              "publisher": "SYNTHETIC FIXTURE",
+              "raw_excerpt": "OpenAI proposed a financing at a post-money valuation of $1.4 trillion.",
+              "content_sha256": "53e930c3b096351ce0a5aa65596d5ebf7adbe98f9fd213d310c035bd72dd5ad8",
+              "synthetic": true,
+              "title": "SYNTHETIC OpenAI example",
+              "access_status": "ACCESSIBLE",
+              "origin_group_id": "fictional_round",
+              "metadata_json": {},
+              "parent_source_id": "synthetic_accepted"
+            }
+          },
+          {
+            "claim_id": "synthetic_claim_future",
+            "claim_json": {
+              "source_ids": [
+                "synthetic_future"
+              ],
+              "entity": "OpenAI",
+              "claim_type": "financing_valuation_target",
+              "event_cluster_id": "future_round",
+              "event_status": "proposed",
+              "event_at": null,
+              "effective_at": null,
+              "published_at": "2026-11-08T17:00:00+00:00",
+              "valuation_basis": "post_money",
+              "reported_valuation_trillion": "1.4",
+              "supporting_quote": "OpenAI proposed a financing at a post-money valuation of $1.4 trillion.",
+              "quote_location": "synthetic paragraph 1",
+              "supported": true,
+              "causal_mechanisms": [
+                "financing_valuation_anchor"
+              ],
+              "direction": "uncertain",
+              "uncertainty_notes": [
+                "SYNTHETIC; no actual event"
+              ],
+              "scenario_tags": [],
+              "drivers": [],
+              "mechanism_path_ids": [],
+              "alternative_explanations": [
+                "Proposed transaction may never close; growth may raise costs."
+              ],
+              "hypothesis": "Illustrative uncalibrated mechanism",
+              "synthetic": true
+            },
+            "verification_status": "VERIFIED",
+            "source": {
+              "source_id": "synthetic_future",
+              "version_id": "synthetic_future_v1",
+              "canonical_url": "https://example.invalid/synthetic/future",
+              "first_public_at": "2026-11-08T17:00:00+00:00",
+              "published_at": "2026-11-08T17:00:00+00:00",
+              "first_seen_at": "2026-11-08T17:00:00+00:00",
+              "captured_at": "2026-11-08T17:00:00+00:00",
+              "retrieved_at": "2026-11-08T17:00:00+00:00",
+              "source_type": "official_primary",
+              "publisher": "SYNTHETIC FIXTURE",
+              "raw_excerpt": "OpenAI proposed a financing at a post-money valuation of $1.4 trillion.",
+              "content_sha256": "53e930c3b096351ce0a5aa65596d5ebf7adbe98f9fd213d310c035bd72dd5ad8",
+              "synthetic": true,
+              "title": "SYNTHETIC OpenAI example",
+              "access_status": "ACCESSIBLE",
+              "origin_group_id": "future_round",
+              "metadata_json": {},
+              "parent_source_id": null
+            }
+          },
+          {
+            "claim_id": "synthetic_claim_absorbed",
+            "claim_json": {
+              "source_ids": [
+                "synthetic_absorbed"
+              ],
+              "entity": "OpenAI",
+              "claim_type": "revenue",
+              "event_cluster_id": "old_growth",
+              "event_status": "proposed",
+              "event_at": null,
+              "effective_at": null,
+              "published_at": "2026-11-02T17:00:00+00:00",
+              "valuation_basis": "post_money",
+              "reported_valuation_trillion": null,
+              "supporting_quote": "OpenAI reported growth in enterprise revenue.",
+              "quote_location": "synthetic paragraph 1",
+              "supported": true,
+              "causal_mechanisms": [
+                "growth_fundamentals"
+              ],
+              "direction": "uncertain",
+              "uncertainty_notes": [
+                "SYNTHETIC; no actual event"
+              ],
+              "scenario_tags": [],
+              "drivers": [],
+              "mechanism_path_ids": [],
+              "alternative_explanations": [
+                "Proposed transaction may never close; growth may raise costs."
+              ],
+              "hypothesis": "Illustrative uncalibrated mechanism",
+              "synthetic": true
+            },
+            "verification_status": "VERIFIED",
+            "source": {
+              "source_id": "synthetic_absorbed",
+              "version_id": "synthetic_absorbed_v1",
+              "canonical_url": "https://example.invalid/synthetic/absorbed",
+              "first_public_at": "2026-11-02T17:00:00+00:00",
+              "published_at": "2026-11-02T17:00:00+00:00",
+              "first_seen_at": "2026-11-02T17:00:00+00:00",
+              "captured_at": "2026-11-02T17:00:00+00:00",
+              "retrieved_at": "2026-11-02T17:00:00+00:00",
+              "source_type": "official_primary",
+              "publisher": "SYNTHETIC FIXTURE",
+              "raw_excerpt": "OpenAI reported growth in enterprise revenue.",
+              "content_sha256": "a7ba1dbb407e7c2e3a6d4e45bdf354c2df951cb0c87b39536f9dd0e65d0207d2",
+              "synthetic": true,
+              "title": "SYNTHETIC OpenAI example",
+              "access_status": "ACCESSIBLE",
+              "origin_group_id": "old_growth",
+              "metadata_json": {},
+              "parent_source_id": null
+            }
+          }
+        ],
+        "sources": [
+          {
+            "source_id": "synthetic_accepted",
+            "version_id": "synthetic_accepted_v1",
+            "canonical_url": "https://example.invalid/synthetic/accepted",
+            "first_public_at": "2026-11-06T17:00:00+00:00",
+            "published_at": "2026-11-06T17:00:00+00:00",
+            "first_seen_at": "2026-11-06T17:00:00+00:00",
+            "captured_at": "2026-11-06T17:00:00+00:00",
+            "retrieved_at": "2026-11-06T17:00:00+00:00",
+            "source_type": "official_primary",
+            "publisher": "SYNTHETIC FIXTURE",
+            "raw_excerpt": "OpenAI proposed a financing at a post-money valuation of $1.4 trillion.",
+            "content_sha256": "53e930c3b096351ce0a5aa65596d5ebf7adbe98f9fd213d310c035bd72dd5ad8",
+            "synthetic": true,
+            "title": "SYNTHETIC OpenAI example",
+            "access_status": "ACCESSIBLE",
+            "origin_group_id": "fictional_round",
+            "metadata_json": {},
+            "parent_source_id": null
+          },
+          {
+            "source_id": "synthetic_duplicate",
+            "version_id": "synthetic_duplicate_v1",
+            "canonical_url": "https://example.invalid/synthetic/duplicate",
+            "first_public_at": "2026-11-06T17:00:00+00:00",
+            "published_at": "2026-11-06T17:00:00+00:00",
+            "first_seen_at": "2026-11-06T17:00:00+00:00",
+            "captured_at": "2026-11-06T17:00:00+00:00",
+            "retrieved_at": "2026-11-06T17:00:00+00:00",
+            "source_type": "syndicated",
+            "publisher": "SYNTHETIC FIXTURE",
+            "raw_excerpt": "OpenAI proposed a financing at a post-money valuation of $1.4 trillion.",
+            "content_sha256": "53e930c3b096351ce0a5aa65596d5ebf7adbe98f9fd213d310c035bd72dd5ad8",
+            "synthetic": true,
+            "title": "SYNTHETIC OpenAI example",
+            "access_status": "ACCESSIBLE",
+            "origin_group_id": "fictional_round",
+            "metadata_json": {},
+            "parent_source_id": "synthetic_accepted"
+          },
+          {
+            "source_id": "synthetic_future",
+            "version_id": "synthetic_future_v1",
+            "canonical_url": "https://example.invalid/synthetic/future",
+            "first_public_at": "2026-11-08T17:00:00+00:00",
+            "published_at": "2026-11-08T17:00:00+00:00",
+            "first_seen_at": "2026-11-08T17:00:00+00:00",
+            "captured_at": "2026-11-08T17:00:00+00:00",
+            "retrieved_at": "2026-11-08T17:00:00+00:00",
+            "source_type": "official_primary",
+            "publisher": "SYNTHETIC FIXTURE",
+            "raw_excerpt": "OpenAI proposed a financing at a post-money valuation of $1.4 trillion.",
+            "content_sha256": "53e930c3b096351ce0a5aa65596d5ebf7adbe98f9fd213d310c035bd72dd5ad8",
+            "synthetic": true,
+            "title": "SYNTHETIC OpenAI example",
+            "access_status": "ACCESSIBLE",
+            "origin_group_id": "future_round",
+            "metadata_json": {},
+            "parent_source_id": null
+          },
+          {
+            "source_id": "synthetic_absorbed",
+            "version_id": "synthetic_absorbed_v1",
+            "canonical_url": "https://example.invalid/synthetic/absorbed",
+            "first_public_at": "2026-11-02T17:00:00+00:00",
+            "published_at": "2026-11-02T17:00:00+00:00",
+            "first_seen_at": "2026-11-02T17:00:00+00:00",
+            "captured_at": "2026-11-02T17:00:00+00:00",
+            "retrieved_at": "2026-11-02T17:00:00+00:00",
+            "source_type": "official_primary",
+            "publisher": "SYNTHETIC FIXTURE",
+            "raw_excerpt": "OpenAI reported growth in enterprise revenue.",
+            "content_sha256": "a7ba1dbb407e7c2e3a6d4e45bdf354c2df951cb0c87b39536f9dd0e65d0207d2",
+            "synthetic": true,
+            "title": "SYNTHETIC OpenAI example",
+            "access_status": "ACCESSIBLE",
+            "origin_group_id": "old_growth",
+            "metadata_json": {},
+            "parent_source_id": null
+          }
+        ]
+      },
+      "seed": 20261107,
+      "monte_carlo_samples": 20000
+    }
+  ]
+}

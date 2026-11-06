@@ -1,0 +1,22 @@
+{
+  "checked_at": "2026-11-06T21:01:52.813364+00:00",
+  "synthetic_llm_input": true,
+  "providers": [
+    {
+      "provider": "Tavily",
+      "status": "OK",
+      "http_status": 200,
+      "reason": null,
+      "usage": null,
+      "response_sha256": "9c333163a9487c91223ef8aaf07bfc37abb212645a256e5a95c4bb3bb717c785"
+    },
+    {
+      "provider": "DeepSeek",
+      "status": "LLM_FAILURE",
+      "http_status": 401,
+      "reason": "HTTP_OR_TRANSPORT_ERROR",
+      "usage": null,
+      "response_sha256": null
+    }
+  ]
+}

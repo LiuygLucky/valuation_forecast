@@ -1,0 +1,12 @@
+version: heuristic-v1
+origin_type: expert_heuristic
+review_status: UNCALIBRATED
+alpha: 0.35
+absorbed_alpha: 0.0
+groups:
+  financing_proposed: {S1: 0.65, S2: 0.50, S3: 0.35}
+  financing_committed: {S1: 0.80, S2: 0.40, S3: 0.20}
+  financing_closed: {S1: 0.90, S2: 0.25, S3: 0.15}
+  financing_cancelled: {S1: 0.15, S2: 0.60, S3: 0.65}
+  growth_reported: {S1: 0.55, S2: 0.60, S3: 0.40}
+  cost_reported: {S1: 0.50, S2: 0.65, S3: 0.40}

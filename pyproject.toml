@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openai-npm-forecast"
+version = "1.0.0"
+description = "Auditable, point-in-time NPM valuation research prototype"
+requires-python = ">=3.12"
+dependencies = [
+  "pydantic>=2.9,<3", "SQLAlchemy>=2.0,<3", "alembic>=1.13,<2",
+  "httpx>=0.27,<1", "tenacity>=9,<10", "numpy>=2,<3", "scipy>=1.14,<2",
+  "pandas>=2.2,<3", "networkx>=3.3,<4", "PyYAML>=6,<7", "python-dotenv>=1,<2",
+  "streamlit>=1.40,<2", "plotly>=5.24,<7", "tzdata>=2024.2"
+]
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "pytest-cov>=6,<8", "ruff>=0.9", "mypy>=1.13", "types-PyYAML"]
+research = ["pymc>=5", "dowhy>=0.12", "u8darts>=0.30"]
+[project.scripts]
+valuation-forecast = "forecast.cli:main"
+[tool.setuptools.packages.find]
+where = ["src"]
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --basetemp=data/test-tmp"
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+check_untyped_defs = true
+

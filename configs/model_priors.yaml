@@ -1,0 +1,38 @@
+version: heuristic-v1
+origin_type: elicited_prior
+reviewer: UNREVIEWED_RESEARCH_ASSUMPTION
+basis: No fitted NPM history; broad research assumptions only, not calibrated.
+calibration_status: UNCALIBRATED
+nu: 5.0
+h_floor: 0.0
+quote_error_verified: false
+beta_identified: false
+major_repricing_threshold: 0.10
+major_financing_usd_trillion: 0.01
+event_window_end: '2026-12-31'
+event_window_definition: after as_of through target date
+direction_threshold_log: 0.02
+scenario_priority: [S1, S2, S3]
+scenario_weights: {S1: 0.25, S2: 0.30, S3: 0.45}
+scenarios:
+  S1:
+    name: funding_closed_revaluation
+    mu: [-0.12, 0.18]
+    sigma: [0.20, 0.50]
+    jump: [-0.25, 0.35]
+    pass_through: [0.20, 0.90]
+    lag_days: [0, 45]
+  S2:
+    name: funding_not_closed_market_repricing
+    mu: [-0.15, 0.15]
+    sigma: [0.20, 0.45]
+    jump: [-0.22, 0.22]
+    pass_through: [0.10, 0.65]
+    lag_days: [0, 60]
+  S3:
+    name: no_major_repricing
+    mu: [-0.06, 0.06]
+    sigma: [0.08, 0.22]
+    jump: [0.0, 0.0]
+    pass_through: [0.0, 0.0]
+    lag_days: [0, 0]

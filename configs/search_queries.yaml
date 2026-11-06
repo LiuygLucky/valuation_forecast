@@ -1,0 +1,17 @@
+version: v1
+overlap_days: 3
+weekly_lookback_days: 90
+max_results_per_topic: 3
+max_documents: 21
+max_requests: 7
+max_attempts_per_request: 3
+max_search_credits: 21
+max_llm_documents: 10
+queries:
+  - '("OpenAI" AND (valuation OR secondary shares OR tender OR private market))'
+  - '("OpenAI" AND (funding OR fundraising OR round OR investment OR term sheet))'
+  - '("OpenAI" AND (revenue OR ARR OR enterprise customers OR growth))'
+  - '("OpenAI" AND (compute costs OR capex OR cash burn OR profitability))'
+  - '("OpenAI" AND (Microsoft OR Nvidia OR competitor OR Anthropic))'
+  - '("OpenAI" AND (regulation OR antitrust OR litigation OR governance))'
+  - '(site:openai.com/news/ OpenAI investment OR partnership OR enterprise)'
