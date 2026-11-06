@@ -12,10 +12,10 @@
 - [x] 预注册DAG、机制白名单、单效应通道、敏感性。
 - [x] 原子快照/manifest、报告、CLI、Streamlit固定题面一键运行。
 - [x] 五种运行模式、结算评分、辅助回测/消融接口。
-- [x] 最新已完成56测试通过，核心覆盖率99.23%，ruff/mypy通过。
+- [x] 最终58测试通过，核心覆盖率99.23%，ruff/mypy通过。
 - [x] 真实API smoke：Tavily200；DeepSeek401，docs/api_smoke.json。
 - [x] 合成回测2任务×6模型=12记录，0失败；真实档案缺失正确拒绝。
-- [ ] 最后复查后的完整重跑、最终DEMO/REPLAY报告、交付记录（进行中）。
+- [x] 最终58测试通过；DEMO/REPLAY一致；验收报告、代码版本与交付记录已保存。
 
 ## 真实限制
 无经用户核验的真实NPM观测/档案，提供空白导入模板。DeepSeek真实凭据认证失败。NPM页面403，无授权API。所有likelihood/alpha/jump未校准，因果效应未识别，M5校准NOT_FITTED。
@@ -26,3 +26,10 @@
 3. 继续未勾选项，保存最终测试数和DEMO报告，不重做完成模块。
 4. 不输出.env或prompt密钥，不用合成数据填LIVE缺口。
 5. replay要求相同代码内容和依赖；早期开发快照可能因代码演进不能重放，属预期检查。
+
+## 最终交付
+- 代码版本：af956d1（实现提交2c20111）；后续文档封存不改变模型代码。
+- DEMO run_id：ff3de36d-8e8d-4a4b-be12-4ed13a104c8a。
+- 报告：docs/demo_report.md；CLI验收：docs/cli_validation.json；测试映射：docs/test_results.md。
+- 启动：双击start_dashboard.bat，或按README命令。
+- 本次代码交付已完成；后续接入真实数据/凭据后再验证实际LIVE与校准。

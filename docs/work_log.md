@@ -28,3 +28,13 @@
 - Synthetic backtest:2 tasks/12 model records/0 failures. archived_v1 missing → DATA_UNAVAILABLE, expected.
 - Next: final regression, CLI/REPLAY, final report and file manifest.
 - Data authenticity: no real NPM observation supplied; fixtures fictional; calibration:none.
+
+## Final delivery — 2026-11-07
+- Final regression:58 passed,0 failed; core coverage99.23%;ruff/mypy/dependency check passed.
+- Added certified historical archive mode and frozen-contract tests.
+- Local Git initialized:2c20111 implementation;af956d1 pins LF line endings. Credentials/prompt/data excluded.
+- Final DEMO:ff3de36d-8e8d-4a4b-be12-4ed13a104c8a;REPLAY REPRODUCED; LIVE NO_VALID_ANCHOR(expected).
+- CLI evidence:docs/cli_validation.json; human-readable demo:docs/demo_report.md;15-category acceptance:docs/test_results.md.
+- Final synthetic backtest:2 tasks,12 records,0 failures; unavailable real dataset rejected.
+- Secret scan found no supplied API keys in code/config/docs/tests/templates/dashboard/scripts/migrations.
+- No unresolved automated test failures. Real-data/calibration limitations persist and are documented, not filled with fiction.
