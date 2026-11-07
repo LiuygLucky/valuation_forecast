@@ -73,3 +73,6 @@
 - 15个快照文件哈希校验通过，概率和1，禁用HTTP/浏览器访问的离线重放 REPRODUCED，结果哈希匹配。
 - 详见 docs/live_validation_after_evidence_change.json 与 docs/live_report_after_evidence_change.md；快照在 data/snapshots/a811680a-d68e-457c-84f0-9a58fdc742aa。
 - 当前明确剩余瓶颈：公开文章的访问限制和页面内可核验发布时间。不得用Tavily搜索日期或摘要冒充原文事实。
+
+## 正常跳转修复与真实验收（2026-11-07）
+用户要求解决Tavily相关访问问题。确认Tavily由Python固定查询计划发起，搜索本身成功；此前8个受限状态均为301，原因是拒绝所有重定向。现允许最多6跳的同站规范地址跳转，保留跨站、降级协议、登录/付费入口拒绝。71测试通过，ruff/mypy通过。真实LIVE d5e94b96-6a49-49ab-97cb-5df8890cb7f2 完成；采集统计 {"documents": 14, "llm_documents": 7, "new_verified_claims": 5, "npm_import": null, "npm_status": "NPM_FETCH_BLOCKED", "search_ids": ["ab42c4cf-dddc-4df0-8855-3cd09f7a32d8", "88261c8b-1960-43ed-9562-55ebd6b8aca2", "2afd3509-2ae7-4208-b786-bab0763ee276", "ce659197-9c67-4aea-b657-599670d3ed9d", "fb0b8393-6f2d-4507-b1f3-98432dd381f0", "081095dc-71f6-4e0a-a30e-e93581c0648d", "17a916e4-b5dc-4fb1-918c-bf2cacf228e5"], "warnings": ["NPM_FETCH_BLOCKED", "TIME_NOT_VERIFIED:PUBLICATION_TIME_MISSING"]}；离线重放REPRODUCED。详见live_redirect_fix_validation.json及报告。

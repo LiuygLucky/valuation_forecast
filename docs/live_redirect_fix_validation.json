@@ -1,0 +1,75 @@
+{
+  "run": {
+    "run_id": "d5e94b96-6a49-49ab-97cb-5df8890cb7f2",
+    "mode": "LIVE",
+    "status": "COMPLETED",
+    "as_of_utc": "2026-11-07T03:00:24.940607+00:00",
+    "snapshot_path": "D:\\Desktop\\valuation_forecast\\data\\snapshots\\d5e94b96-6a49-49ab-97cb-5df8890cb7f2",
+    "warnings": [
+      "NPM_FETCH_BLOCKED",
+      "TIME_NOT_VERIFIED:PUBLICATION_TIME_MISSING",
+      "BASELINE_ONLY: no eligible unabsorbed evidence likelihood",
+      "UNCALIBRATED: expert_heuristic parameters",
+      "NPM schedule is a page claim, not a guarantee; date-only quotes have no precise update timestamp"
+    ],
+    "result": {
+      "bin_probabilities": {
+        "B1": 0.00396,
+        "B2": 0.018605,
+        "B3": 0.0946075,
+        "B4": 0.446315,
+        "B5": 0.309715,
+        "B6": 0.1267975
+      },
+      "scenario_posterior": {
+        "S1": 0.25,
+        "S2": 0.3,
+        "S3": 0.45
+      },
+      "mc_se": {
+        "B1": 0.00023528319638257213,
+        "B2": 0.0005074899198506311,
+        "B3": 0.0011240127322177005,
+        "B4": 0.0020295499133120625,
+        "B5": 0.0019576886973226874,
+        "B6": 0.001203268653371931
+      },
+      "predictive_quantiles": {
+        "q05": 1.070791953000429,
+        "median": 1.2856123346016999,
+        "q95": 1.5851743252159303,
+        "bin_probs": {
+          "B1": 0.0036,
+          "B2": 0.018,
+          "B3": 0.0976,
+          "B4": 0.44565,
+          "B5": 0.31,
+          "B6": 0.12515
+        }
+      },
+      "uncertainty_label": "MC SE only; parameters are heuristic, not calibrated",
+      "parameter_uncertainty_interval": null
+    }
+  },
+  "collection": {
+    "documents": 14,
+    "llm_documents": 7,
+    "new_verified_claims": 5,
+    "npm_import": null,
+    "npm_status": "NPM_FETCH_BLOCKED",
+    "search_ids": [
+      "ab42c4cf-dddc-4df0-8855-3cd09f7a32d8",
+      "88261c8b-1960-43ed-9562-55ebd6b8aca2",
+      "2afd3509-2ae7-4208-b786-bab0763ee276",
+      "ce659197-9c67-4aea-b657-599670d3ed9d",
+      "fb0b8393-6f2d-4507-b1f3-98432dd381f0",
+      "081095dc-71f6-4e0a-a30e-e93581c0648d",
+      "17a916e4-b5dc-4fb1-918c-bf2cacf228e5"
+    ],
+    "warnings": [
+      "NPM_FETCH_BLOCKED",
+      "TIME_NOT_VERIFIED:PUBLICATION_TIME_MISSING"
+    ]
+  },
+  "replay": "REPRODUCED"
+}

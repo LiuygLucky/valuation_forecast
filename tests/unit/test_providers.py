@@ -195,3 +195,37 @@ def test_financing_amount_never_becomes_valuation(demo):
     assert not verify_claim(
         claim, {row["source"]["source_id"]: row["source"] | {"raw_excerpt": quote}}
     )[0]
+
+
+def test_normal_trailing_slash_redirect_is_followed():
+    calls = []
+
+    def handler(request):
+        calls.append(str(request.url))
+        if request.url.path == "/news":
+            return httpx.Response(301, headers={"location": "/news/"})
+        return httpx.Response(
+            200,
+            text='<meta property="article:published_time" content="2026-11-01T12:00:00Z"><p>OpenAI reported revenue growth.</p>',
+            headers={"content-type": "text/html"},
+        )
+
+    result = PublicArticleRetriever(client(handler), respect_robots=False).fetch(
+        {"url": "https://example-news.com/news/"}
+    )
+    assert result.status == "OK"
+    assert calls == ["https://example-news.com/news", "https://example-news.com/news/"]
+
+
+def test_cross_site_redirect_is_not_followed():
+    calls = []
+
+    def handler(request):
+        calls.append(str(request.url))
+        return httpx.Response(302, headers={"location": "https://other-site.com/login"})
+
+    result = PublicArticleRetriever(client(handler), respect_robots=False).fetch(
+        {"url": "https://example-news.com/news"}
+    )
+    assert result.status == "METADATA_ONLY"
+    assert len(calls) == 1

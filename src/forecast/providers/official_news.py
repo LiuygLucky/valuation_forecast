@@ -95,6 +95,31 @@ class PublicArticleRetriever:
         )
         self.respect_robots = respect_robots
 
+    def _get_public(self, url):
+        """Follow bounded publisher-local canonical redirects without rewriting Location."""
+        original_host = (urlsplit(url).hostname or "").removeprefix("www.")
+        for _ in range(6):
+            public_article_url(url)
+            response = self.client.get(url)
+            if response.status_code not in (301, 302, 303, 307, 308):
+                return response
+            location = response.headers.get("location")
+            if not location:
+                return response
+            target = urljoin(url, location)
+            public_article_url(target)
+            if (urlsplit(target).hostname or "").removeprefix("www.") != original_host:
+                return response
+            if urlsplit(url).scheme == "https" and urlsplit(target).scheme != "https":
+                return response
+            if any(
+                part in urlsplit(target).path.lower().split("/")
+                for part in ("login", "signin", "subscribe", "paywall")
+            ):
+                return response
+            url = target
+        raise ValueError("REDIRECT_LIMIT")
+
     def fetch(self, candidate):
         try:
             url = public_article_url(candidate["url"])
@@ -104,7 +129,7 @@ class PublicArticleRetriever:
             host = urlsplit(url).hostname or ""
             if self.respect_robots:
                 robots_url = urljoin(url, "/robots.txt")
-                robots_response = self.client.get(robots_url)
+                robots_response = self._get_public(robots_url)
                 if robots_response.status_code not in (200, 404):
                     return DataFetchResult("Article", "METADATA_ONLY", reason="ROBOTS_UNAVAILABLE")
                 robots = RobotFileParser()
@@ -113,7 +138,7 @@ class PublicArticleRetriever:
                 )
                 if not robots.can_fetch("ValuationResearch", url):
                     return DataFetchResult("Article", "METADATA_ONLY", reason="ROBOTS_DISALLOW")
-            response = self.client.get(url)
+            response = self._get_public(url)
             if response.status_code != 200:
                 return DataFetchResult(
                     "Article",
