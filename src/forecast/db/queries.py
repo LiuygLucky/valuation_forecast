@@ -1,6 +1,14 @@
 from sqlalchemy import select, text
 
-from forecast.db.models import ClaimRecord, FinancialFeature, Observation, Source, SourceVersion
+from forecast.agent.prompts import PROMPT_VERSION
+from forecast.db.models import (
+    ClaimRecord,
+    ExtractionRecord,
+    FinancialFeature,
+    Observation,
+    Source,
+    SourceVersion,
+)
 from forecast.domain.time_policy import availability_reason, utc
 
 
@@ -66,10 +74,21 @@ def freeze_inputs(session, as_of, *, provisional=False, archived=False):
         ):
             features.append(row_dict(feature))
     claims = []
+    refreshed = {
+        sources[e.version_id]["source_id"]
+        for e in session.scalars(select(ExtractionRecord))
+        if e.status == "OK"
+        and e.prompt_version == PROMPT_VERSION
+        and e.usage_json.get("recorded_at")
+        and utc(e.usage_json["recorded_at"]) <= utc(as_of)
+    }
     for claim in session.scalars(select(ClaimRecord)):
         src = sources[claim.source_version_id]
         if not src["synthetic"]:
-            claims.append(row_dict(claim) | {"source": src})
+            record = row_dict(claim) | {"source": src}
+            if src["source_id"] in refreshed and claim.extractor_version != PROMPT_VERSION:
+                record["verification_status"] = "SUPERSEDED_EXTRACTION"
+            claims.append(record)
     return {
         "anchor": observations[-1] if observations else None,
         "observations": observations,

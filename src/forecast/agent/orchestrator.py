@@ -7,6 +7,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from forecast.agent.extractor import QwenExtractor
+from forecast.agent.prompts import PROMPT_VERSION
 from forecast.agent.verifier import verify_claim
 from forecast.audit.hashing import object_hash, redact
 from forecast.config import load_yaml
@@ -182,7 +183,9 @@ def collect_live(engine, search=None, extractor=None, retriever=None, npm=None):
             )
             previous = session.scalar(
                 select(ExtractionRecord).where(
-                    ExtractionRecord.version_id == vid, ExtractionRecord.status == "OK"
+                    ExtractionRecord.version_id == vid,
+                    ExtractionRecord.status == "OK",
+                    ExtractionRecord.prompt_version == PROMPT_VERSION,
                 )
             )
             source = source_version_dict(session.get(Source, sid), session.get(SourceVersion, vid))
@@ -203,7 +206,8 @@ def collect_live(engine, search=None, extractor=None, retriever=None, npm=None):
                     response_sha256=extraction.data.get(
                         "response_sha256", object_hash(extraction.status)
                     ),
-                    usage_json=extraction.data.get("usage", {}),
+                    usage_json=extraction.data.get("usage", {})
+                    | {"recorded_at": datetime.now(UTC).isoformat()},
                     status=extraction.status,
                 )
             )
@@ -221,7 +225,13 @@ def collect_live(engine, search=None, extractor=None, retriever=None, npm=None):
                 claim.event_cluster_id = f"OpenAI:{family}:2026"
                 cid = (
                     "claim_"
-                    + object_hash({"version": vid, "claim": claim.model_dump(mode="json")})[:24]
+                    + object_hash(
+                        {
+                            "version": vid,
+                            "prompt": extraction.data["prompt_version"],
+                            "claim": claim.model_dump(mode="json"),
+                        }
+                    )[:24]
                 )
                 if session.get(ClaimRecord, cid):
                     continue

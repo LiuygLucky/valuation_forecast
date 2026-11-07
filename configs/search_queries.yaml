@@ -1,12 +1,12 @@
 version: v1
 overlap_days: 3
 weekly_lookback_days: 90
-max_results_per_topic: 3
-max_documents: 21
-max_requests: 7
+max_results_per_topic: 6
+max_documents: 60
+max_requests: 12
 max_attempts_per_request: 3
-max_search_credits: 21
-max_llm_documents: 10
+max_search_credits: 36
+max_llm_documents: 24
 queries:
   - '("OpenAI" AND (valuation OR secondary shares OR tender OR private market))'
   - '("OpenAI" AND (funding OR fundraising OR round OR investment OR term sheet))'
@@ -15,3 +15,8 @@ queries:
   - '("OpenAI" AND (Microsoft OR Nvidia OR competitor OR Anthropic))'
   - '("OpenAI" AND (regulation OR antitrust OR litigation OR governance))'
   - '(site:openai.com/news/ OpenAI investment OR partnership OR enterprise)'
+  - '(OpenAI investment announcement site:softbank.jp)'
+  - '(OpenAI partnership investment announcement site:microsoft.com)'
+  - '(OpenAI investment announcement site:nvidia.com)'
+  - '(OpenAI funding valuation site:reuters.com OR site:bloomberg.com OR site:ft.com)'
+  - '(OpenAI 融资 估值 收入 公告)'

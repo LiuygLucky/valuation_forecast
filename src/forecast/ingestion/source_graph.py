@@ -33,6 +33,7 @@ def build_clusters(records: list[dict], as_of, *, archived=False):
             continue
         included[cid] = row
         graph.add_node(cid)
+        family = "financing" if claim["claim_type"].startswith("financing") else claim["claim_type"]
         identities = ["event:" + claim["event_cluster_id"], "source:" + source["source_id"]]
         for key in ("origin_group_id", "parent_source_id"):
             if source.get(key):
@@ -43,7 +44,7 @@ def build_clusters(records: list[dict], as_of, *, archived=False):
             "source:" + s for s in source.get("metadata_json", {}).get("cites_source_ids", [])
         )
         for identity in identities:
-            graph.add_edge(cid, identity)
+            graph.add_edge(cid, family + ":" + identity)
     clusters = []
     for component in nx.connected_components(graph):
         rows = [included[cid] for cid in component if cid in included]
@@ -56,7 +57,10 @@ def build_clusters(records: list[dict], as_of, *, archived=False):
             claim = row["claim_json"]
             old = events.get(claim["event_cluster_id"])
             if old and (
-                not valid_transition(old["event_status"], claim["event_status"])
+                (
+                    claim["claim_type"].startswith("financing")
+                    and not valid_transition(old["event_status"], claim["event_status"])
+                )
                 or compare_claims(old, claim) == "CONTRADICTS"
             ):
                 reason = "REVIEW_REQUIRED"

@@ -19,6 +19,26 @@ from forecast.model.priors import validate_priors
 AS_OF = "2026-11-07T17:00:00+00:00"
 
 
+def test_nonfinancing_claim_does_not_use_funding_state_machine(demo):
+    first = deepcopy(demo["claims"][0])
+    first["claim_json"].update(
+        claim_type="compute_cost", event_status="closed", reported_valuation_trillion=None
+    )
+    second = deepcopy(first)
+    second["claim_id"] = "later_cost"
+    second["claim_json"].update(event_status="proposed", published_at="2026-11-07T15:00:00Z")
+    clusters = build_clusters([first, second], AS_OF)
+    assert len(clusters) == 1
+    assert clusters[0]["exclusion_reason"] is None
+
+
+def test_extractor_receives_registered_causal_vocabulary(demo):
+    from forecast.agent.prompts import messages
+
+    prompt = messages(demo["claims"][0]["source"])[0]["content"]
+    assert "customer_demand_t" in prompt and "H05" in prompt
+
+
 def calculation(inputs):
     return calculate(
         inputs,

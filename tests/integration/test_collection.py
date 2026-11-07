@@ -4,6 +4,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from forecast.agent.orchestrator import collect_live
+from forecast.agent.prompts import PROMPT_VERSION
 from forecast.application.demo import demo_inputs
 from forecast.audit.hashing import object_hash
 from forecast.db.models import ClaimRecord, ExtractionRecord
@@ -73,7 +74,7 @@ def test_full_mock_pipeline_cache_and_source_ids(engine):
                 data={
                     "claims": [claim],
                     "model_id": self.model,
-                    "prompt_version": "claims-v1",
+                    "prompt_version": PROMPT_VERSION,
                     "usage": {},
                     "response_sha256": object_hash(claim),
                 },

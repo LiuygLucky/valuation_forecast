@@ -76,3 +76,13 @@
 
 ## 正常跳转修复与真实验收（2026-11-07）
 用户要求解决Tavily相关访问问题。确认Tavily由Python固定查询计划发起，搜索本身成功；此前8个受限状态均为301，原因是拒绝所有重定向。现允许最多6跳的同站规范地址跳转，保留跨站、降级协议、登录/付费入口拒绝。71测试通过，ruff/mypy通过。真实LIVE d5e94b96-6a49-49ab-97cb-5df8890cb7f2 完成；采集统计 {"documents": 14, "llm_documents": 7, "new_verified_claims": 5, "npm_import": null, "npm_status": "NPM_FETCH_BLOCKED", "search_ids": ["ab42c4cf-dddc-4df0-8855-3cd09f7a32d8", "88261c8b-1960-43ed-9562-55ebd6b8aca2", "2afd3509-2ae7-4208-b786-bab0763ee276", "ce659197-9c67-4aea-b657-599670d3ed9d", "fb0b8393-6f2d-4507-b1f3-98432dd381f0", "081095dc-71f6-4e0a-a30e-e93581c0648d", "17a916e4-b5dc-4fb1-918c-bf2cacf228e5"], "warnings": ["NPM_FETCH_BLOCKED", "TIME_NOT_VERIFIED:PUBLICATION_TIME_MISSING"]}；离线重放REPRODUCED。详见live_redirect_fix_validation.json及报告。
+
+## 扩大检索与证据更新修正（2026-11-07，进行中）
+用户要求扩大新闻公告检索并让证据更新更合理，每次修改必须记录。
+1. search_queries：7主题扩为12主题（增加SoftBank、Microsoft、Nvidia、重点媒体和中文公告），每主题3→6、文档21→60、LLM文档10→24；最多36次基础搜索尝试预算。检索量不是有效证据数量保证。
+2. source_graph：融资状态机仅用于融资主张，避免把成本/收入描述的closed→proposed误判为融资状态倒退。
+3. prompts：新增claims-v2-registered-mechanisms，向LLM提供配置中的合法drivers和path ID；不接受自由文本充当图节点。
+4. orchestrator：抽取缓存按prompt_version命中，记录抽取实际recorded_at，claim ID包含prompt版本。
+5. queries：新提示词成功抽取且时间早于as_of时，旧提示词记录标记SUPERSEDED_EXTRACTION，仅保留审计、不重复入模；不覆盖数据库旧记录。
+6. 验证：原71项回归通过、ruff/mypy通过；新增2项回归（非融资状态、合法机制词表）所在19项单元测试通过。已发起扩大检索真实LIVE，结果待补。
+仍保留融资族保守聚类，交易身份不足时不通过拆簇人为增加独立证据；不修改先验/似然常数来强迫概率变化。
