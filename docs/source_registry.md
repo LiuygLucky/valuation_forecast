@@ -26,3 +26,5 @@ Final endpoint confirmed by user:https://maas.qianwenaiapi.com/compatible-mode/v
 
 ## NPM最新直接访问检查（2026-11-07）
 普通HTTP200返回2095字节前端HTML；实际浏览器渲染后公开显示OpenAI Valuation $1.281T、有效日2026-11-04，无需登录。此前403仅为当时特定访问路径结果，不代表永久不可访问。当前项目NPM adapter仍为人工导入，数据库0条观测。访问核验见npm_access_check.json；未新增真实观测或伪造精确更新时间。
+
+2026-11-07更新：NPM公开浏览器证据已保存并视觉核验、入库，详见live_validation.json。Python浏览器403仍记录为失败；浏览器导出未暴露HTTP状态，记录null。首次已知公开时间为采集时刻，有效日期不是发布时间。

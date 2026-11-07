@@ -123,3 +123,11 @@
 - `docs/api_contracts.md`、`docs/source_registry.md`、`docs/test_results.md`、`docs/test_results.xml`、`docs/coverage.json`
 - `docs/implementation_status.md`、`docs/work_log.md`、本清单
 - 本地`.env`（被忽略；现有密钥和确认的Base URL）
+
+## NPM/LIVE验收追加
+
+- 采集与入库：src/forecast/providers/npm_browser.py、src/forecast/ingestion/npm_capture.py；CLI与orchestrator接入。
+- 日期与审计：domain/schemas、db/queries、model/baseline与overlap、application/pipeline与settlement、audit/snapshot与manifest、reports/render。
+- 测试：tests/integration/test_npm_capture.py及离线测试fixture。
+- 运行证据：docs/live_validation.json、docs/live_report.md；ADR0003、README与重连记录更新。
+- 数据与原图留在被忽略的data目录，未提交凭据或原prompt。

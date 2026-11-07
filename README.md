@@ -6,9 +6,9 @@
 
 ## 当前状态
 
-- Python 包、SQLite/Alembic、NPM 人工导入、金融基线、Evidence Agent、DAG、审计快照、CLI、Streamlit、结算评分、回测和消融接口已实现。
+- Python 包、SQLite/Alembic、NPM 公开浏览器采集/证据导入、金融基线、Evidence Agent、DAG、审计快照、CLI、Streamlit、结算评分、回测和消融接口已实现。
 - 默认 LLM 已按用户要求切换为 **Qwen3.8-Max**（`qwen3.8-max`）。Tavily 和用户指定接口上的 Qwen 均已返回 HTTP200；Qwen抽取的1条合成测试主张通过独立核验。现有平台密钥有效。记录见 [docs/api_smoke_qwen.json](docs/api_smoke_qwen.json)。
-- 未提供经核验真实 NPM 观测/历史档案，LIVE 报告 NO_VALID_ANCHOR；禁止样例价格填缺口。
+- 已保存并核验真实 NPM 页面截图、HTML、文本及哈希：1.281T，有效日期 2026-11-04。真实 LIVE 已完成且离线重放一致；本次为 BASELINE_ONLY，详见 docs/live_validation.json。历史档案与参数校准仍缺失。
 - 重连入口：[实施清单](docs/implementation_status.md)、[工作记录](docs/work_log.md)。验收结果见 [docs/test_results.md](docs/test_results.md)。
 
 ## 安装（Windows PowerShell，Python 3.12）
@@ -46,7 +46,18 @@ uv sync --locked --extra dev
 
 DEMO 锚点 1.20T 和新闻都是**虚构示例**，样例见 `tests/fixtures/synthetic_demo.json`，不写入真实市场观测表。每次预测有不同 UUID，快照位于 `data/snapshots/<uuid>/`。重放离线验证文件/manifest 哈希、代码指纹、依赖版本和数值结果；代码/依赖改变会明确拒绝，需要恢复记录版本后重放。
 
-## 真实 NPM 导入与 LIVE
+## 真实 NPM 采集、导入与 LIVE
+
+```powershell
+$env:PLAYWRIGHT_BROWSERS_PATH = "$PWD/data/browser-cache"
+.venv\Scripts\python -m playwright install chromium
+.venv\Scripts\python -m forecast.cli capture-npm
+# 普通浏览器导出证据的显式导入（保留原采集时间）：
+.venv\Scripts\python -m forecast.cli capture-npm --browser-export data/raw/npm_browser_transfer
+```
+
+浏览器导出目录包含 page.txt（body.innerText）、page.html（渲染DOM）、page.png（原始截图字节，接受 PNG/JPEG）、transfer.json（url、captured_at UTC、capture_transport=codex_browser、http_status=null）。未知 HTTP 状态不伪造为200。导入前需实际核对截图；本次已完成视觉复核。有效日期仅到日，不补造13:00更新时间；首次入库时间不回填到历史有效日。证据进入每次运行快照，重放不依赖原采集目录。
+
 
 `templates/npm_import_template.csv` 只有表头，不含伪装真实的价格；字段见 `templates/npm_import_instructions.md`。
 
@@ -60,7 +71,7 @@ DEMO 锚点 1.20T 和新闻都是**虚构示例**，样例见 `tests/fixtures/sy
 .venv\Scripts\python -m forecast.cli forecast --mode provisional
 ```
 
-显式 `--as-of` 只读已封存知识，不抓当前网页冒充过去；实时采集省略此参数。NPM 默认返回 NPM_FETCH_BLOCKED，不探测私有 API。外部服务失败有类型健康记录；已有核验锚点仍可运行 baseline-only，不宣称搜索成功。
+显式 `--as-of` 只读已封存知识，不抓当前网页冒充过去；实时采集省略此参数。NPM 默认尝试公开页面浏览器采集；403、登录/重定向或解析失败返回 NPM_FETCH_BLOCKED，不探测私有 API。外部服务失败有类型健康记录；已有核验锚点仍可运行 baseline-only，不宣称搜索成功。
 
 预算：7 个固定主题，每主题3条，总文档21，最多10文档送 LLM。搜索每请求最多3次尝试、总21基础 credits；LLM 每文档最多3次结构化尝试、每次输出上限2500 tokens。相同来源版本不重复抽取。
 

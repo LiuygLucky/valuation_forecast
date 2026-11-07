@@ -1,0 +1,93 @@
+{
+  "run_id": "a0a0a9bb-2445-45fc-ae8c-730e1c4423e8",
+  "status": "COMPLETED",
+  "experiment": "LIVE_PROSPECTIVE",
+  "synthetic": false,
+  "replay_status": "REPRODUCED",
+  "network_disabled_during_replay": true,
+  "result_sha256": "3f17fb493187d11ab51830d2d40ce7c8ad5a20f212b9d9ddfbf284f7fdbb7cb6",
+  "source_sha256": "45652b8de7dda91d74fec3fcf6b1d05c01cb02454fe230350ce744bb6185baa3",
+  "anchor": {
+    "asof_et": "2026-11-06T16:39:31.414000-05:00",
+    "captured_at": "2026-11-06T21:40:41.559932+00:00",
+    "effective_date": "2026-11-04",
+    "effective_timestamp_precision": "date",
+    "indicative": true,
+    "ingestion_method": "public_browser",
+    "methodology": "NPM indicative Valuation; rendered page; effective time known only to date",
+    "metric_name": "npm_valuation",
+    "obs_id": "d5d14081-4579-4295-8fa2-990a9acb433e",
+    "observation_status": "VERIFIED",
+    "observed_at": "2026-11-06T21:39:31.414000+00:00",
+    "operator": "NpmBrowserProvider",
+    "provider": "NPM",
+    "quality_flag": "VERIFIED",
+    "reviewer": "deterministic_dom_and_artifact_verifier_v1",
+    "source_id": "src_c4fe079327ff34c0bedc161c",
+    "source_version_id": "ver_3fd1b9880663ebd49af54d9c",
+    "synthetic": false,
+    "unit": "USD_trillion",
+    "value": "1.281"
+  },
+  "source_first_seen_at": "2026-11-06T21:40:41.559932+00:00",
+  "capture": {
+    "artifacts": {
+      "page.html": "a2039b7ea17806568ba4eab3f27fa72aa719cf633da106e6f890bf0d6ceddfab",
+      "page.jpg": "f93d3e3e7143750e138ecbd8bf28347da723e3b500a06169c50ed1f2c96ea269",
+      "page.txt": "d1ae7353fd66a9fece9eb99eba9cb4514ed29e89ab6e466b5df63615013cb010"
+    },
+    "capture_id": "0ac798cf-82dd-4238-ad60-a303b5d019c0",
+    "capture_method": "public_browser",
+    "capture_transport": "codex_browser",
+    "captured_at": "2026-11-06T21:39:31.414000+00:00",
+    "company": "OpenAI",
+    "effective_date": "2026-11-04",
+    "effective_timestamp_precision": "date",
+    "http_status": null,
+    "metric_type": "npm_valuation",
+    "public_time_basis": "publicly visible at capture; original publication timestamp unknown",
+    "synthetic": false,
+    "url": "https://fe.secondmarket.com/companies/company-30839e0b-2730-4495-839f-1bf638fa9cca/data",
+    "valuation_trillion": "1.281",
+    "verification": "exact DOM metric/date; screenshot retained"
+  },
+  "collection": {
+    "documents": 16,
+    "llm_documents": 0,
+    "new_verified_claims": 0,
+    "npm_import": null,
+    "npm_status": "NPM_FETCH_BLOCKED",
+    "search_ids": [
+      "a344f8e4-40ad-4e6d-bf95-9b6b064de0f4",
+      "a316d5b2-f81f-47b0-84ce-e4adb5bc7a68",
+      "44429fdc-6709-42ee-87d2-32e7337a6194",
+      "eea001aa-07de-48b9-8414-6c947a1db16f",
+      "ff611d26-8bee-4077-a013-8f2b1a47c29a",
+      "e997a29d-e71a-4ce8-9e08-4a1429157aa3",
+      "e4c05b48-c69c-4a83-88bf-2c200c17f9cf"
+    ],
+    "warnings": [
+      "METADATA_ONLY:DOMAIN_REQUIRES_REVIEW",
+      "NO_EVIDENCE: no new verified claims; existing eligible evidence may still apply",
+      "NPM_FETCH_BLOCKED"
+    ]
+  },
+  "bin_probabilities": {
+    "B1": 0.00396,
+    "B2": 0.01862,
+    "B3": 0.09464499999999999,
+    "B4": 0.4462475,
+    "B5": 0.3097025,
+    "B6": 0.126825
+  },
+  "warnings": [
+    "METADATA_ONLY:DOMAIN_REQUIRES_REVIEW",
+    "NO_EVIDENCE: no new verified claims; existing eligible evidence may still apply",
+    "NPM_FETCH_BLOCKED",
+    "BASELINE_ONLY: no eligible unabsorbed evidence likelihood",
+    "UNCALIBRATED: expert_heuristic parameters",
+    "NPM schedule is a page claim, not a guarantee; date-only quotes have no precise update timestamp"
+  ],
+  "snapshot_path": "D:\\Desktop\\valuation_forecast\\data\\snapshots\\a0a0a9bb-2445-45fc-ae8c-730e1c4423e8",
+  "artifacts_verified": 15
+}
