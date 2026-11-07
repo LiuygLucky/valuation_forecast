@@ -11,6 +11,8 @@
 - 已保存并核验真实 NPM 页面截图、HTML、文本及哈希：1.281T，有效日期 2026-11-04。真实 LIVE 已完成且离线重放一致；本次为 BASELINE_ONLY，详见 docs/live_validation.json。历史档案与参数校准仍缺失。
 - 重连入口：[实施清单](docs/implementation_status.md)、[工作记录](docs/work_log.md)。验收结果见 [docs/test_results.md](docs/test_results.md)。
 
+新闻来源按 V1 的原文证据链处理：优先来源先尝试抓取；其他公开域名也会在 URL 安全检查及 robots 规则后尝试读取正文。需有页面内发布时间和涉及 OpenAI 的正文摘录才可进入结构化抽取；搜索摘要不充当证据。非官方文章标记为 `unclassified_publication`，原创性尚未独立证明；主张仍需通过引文、数值、口径、来源和时间核验。付费墙、跳转、无时间、无正文等保留类型化排除原因。旧的仅元数据记录保留不改，后续取得的正文作为独立来源版本核验。
+
 ## 安装（Windows PowerShell，Python 3.12）
 
 ```powershell

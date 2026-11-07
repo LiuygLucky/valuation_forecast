@@ -59,7 +59,12 @@ def save_source(
                 raw_excerpt=content[:12000],
                 published_at=published,
                 content_version_status="SYNTHETIC" if synthetic else "CAPTURED",
-                metadata_json=metadata or {},
+                metadata_json=(metadata or {})
+                | {
+                    "version_access_status": access_status,
+                    "version_source_type": source_type,
+                    "version_publisher": publisher,
+                },
                 archive_capture_at=archive_capture_at,
                 archive_verified=archive_verified,
             )

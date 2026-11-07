@@ -1,3 +1,4 @@
+import ipaddress
 import re
 from datetime import UTC, datetime
 from html.parser import HTMLParser
@@ -11,7 +12,41 @@ from forecast.domain.time_policy import utc
 from forecast.ingestion.canonicalize import canonical_url
 from forecast.providers.base import DataFetchResult
 
-ALLOWED_DOMAINS = ("openai.com", "nasdaq.com", "reuters.com", "bloomberg.com", "ft.com")
+PRIORITY_DOMAINS = (
+    "openai.com",
+    "nasdaqprivatemarket.com",
+    "nasdaq.com",
+    "reuters.com",
+    "bloomberg.com",
+    "ft.com",
+)
+
+
+def public_article_url(url: str) -> str:
+    """Accept public publishers beyond priority sources, but reject local/network targets."""
+    normalized = canonical_url(url)
+    parsed = urlsplit(normalized)
+    host = parsed.hostname or ""
+    if (
+        parsed.port not in (None, 80, 443)
+        or host in ("localhost",)
+        or host.endswith((".localhost", ".local", ".internal"))
+        or "." not in host
+    ):
+        raise ValueError("PUBLIC_ARTICLE_URL_REQUIRED")
+    try:
+        ipaddress.ip_address(host)
+    except ValueError:
+        return normalized
+    raise ValueError("PUBLIC_ARTICLE_URL_REQUIRED")
+
+
+def source_priority(host: str) -> str:
+    return (
+        "priority"
+        if any(host == d or host.endswith("." + d) for d in PRIORITY_DOMAINS)
+        else "other_publication"
+    )
 
 
 class ArticleParser(HTMLParser):
@@ -62,10 +97,11 @@ class PublicArticleRetriever:
 
     def fetch(self, candidate):
         try:
-            url = canonical_url(candidate["url"])
+            url = public_article_url(candidate["url"])
+        except (KeyError, TypeError, ValueError):
+            return DataFetchResult("Article", "METADATA_ONLY", reason="PUBLIC_ARTICLE_URL_REQUIRED")
+        try:
             host = urlsplit(url).hostname or ""
-            if not any(host == d or host.endswith("." + d) for d in ALLOWED_DOMAINS):
-                return DataFetchResult("Article", "METADATA_ONLY", reason="DOMAIN_REQUIRES_REVIEW")
             if self.respect_robots:
                 robots_url = urljoin(url, "/robots.txt")
                 robots_response = self.client.get(robots_url)
@@ -87,13 +123,23 @@ class PublicArticleRetriever:
                 )
             if len(response.content) > 2_000_000:
                 return DataFetchResult("Article", "METADATA_ONLY", reason="DOCUMENT_SIZE_LIMIT")
+            if "html" not in response.headers.get("content-type", "text/html").lower():
+                return DataFetchResult("Article", "METADATA_ONLY", reason="NON_HTML_DOCUMENT")
             parser = ArticleParser()
             parser.feed(response.text)
             if parser.canonical:
                 target = canonical_url(urljoin(url, parser.canonical))
                 if urlsplit(target).hostname == host:
                     url = target
-            published = utc(parser.published).isoformat() if parser.published else None
+            if not parser.published:
+                return DataFetchResult(
+                    "Article", "TIME_NOT_VERIFIED", reason="PUBLICATION_TIME_MISSING"
+                )
+            published = utc(parser.published).isoformat()
+            if utc(published) > datetime.now(UTC):
+                return DataFetchResult(
+                    "Article", "TIME_NOT_VERIFIED", reason="PUBLICATION_TIME_IN_FUTURE"
+                )
             paragraphs = [
                 re.sub(r"\s+", " ", p).strip() for p in parser.paragraphs if "openai" in p.lower()
             ]
@@ -108,6 +154,7 @@ class PublicArticleRetriever:
                 data={
                     "url": url,
                     "publisher": host,
+                    "source_priority": source_priority(host),
                     "published_at": published,
                     "seen_at": datetime.now(UTC).isoformat(),
                     "title": redact(candidate.get("title", "")),

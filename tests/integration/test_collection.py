@@ -7,6 +7,8 @@ from forecast.agent.orchestrator import collect_live
 from forecast.application.demo import demo_inputs
 from forecast.audit.hashing import object_hash
 from forecast.db.models import ClaimRecord, ExtractionRecord
+from forecast.db.queries import freeze_inputs
+from forecast.ingestion.versioning import save_source
 from forecast.providers.base import DataFetchResult
 
 
@@ -25,7 +27,7 @@ def test_full_mock_pipeline_cache_and_source_ids(engine):
                     "response_sha256": object_hash(query),
                     "results": [
                         {
-                            "url": "https://openai.com/news/test",
+                            "url": "https://example-news.com/news/test",
                             "title": "OpenAI test",
                             "rank": 1,
                             "discovery_snippet": "not evidence",
@@ -41,7 +43,7 @@ def test_full_mock_pipeline_cache_and_source_ids(engine):
                 "OK",
                 data={
                     "url": candidate["url"],
-                    "publisher": "openai.com",
+                    "publisher": "example-news.com",
                     "seen_at": now.isoformat(),
                     "published_at": published,
                     "title": "OpenAI test",
@@ -87,3 +89,40 @@ def test_full_mock_pipeline_cache_and_source_ids(engine):
         assert session.scalar(select(func.count()).select_from(ExtractionRecord)) == 1
         claim = session.scalar(select(ClaimRecord))
         assert claim.claim_json["event_cluster_id"] == "OpenAI:financing:2026"
+        assert claim.verification_status == "VERIFIED"
+
+
+def test_later_accessible_article_version_can_be_verified(engine):
+    now = datetime.now(UTC)
+    url = "https://example-news.com/openai-financing"
+    with Session(engine) as session, session.begin():
+        save_source(
+            session,
+            url=url,
+            publisher="discovery_metadata",
+            source_type="discovery_only",
+            seen_at=now,
+            published_at=None,
+            content="search summary only",
+            title="OpenAI",
+            access_status="METADATA_ONLY",
+        )
+    with Session(engine) as session, session.begin():
+        sid, vid = save_source(
+            session,
+            url=url,
+            publisher="example-news.com",
+            source_type="unclassified_publication",
+            seen_at=now,
+            published_at=now - timedelta(hours=1),
+            content="OpenAI proposed a post-money valuation of $1.4 trillion.",
+            title="OpenAI financing",
+            access_status="ACCESSIBLE",
+        )
+    with Session(engine) as session:
+        inputs = freeze_inputs(session, now)
+        source = next(s for s in inputs["sources"] if s["version_id"] == vid)
+        assert source["source_id"] == sid
+        assert source["access_status"] == "ACCESSIBLE"
+        assert source["source_type"] == "unclassified_publication"
+        assert source["first_public_at"] == (now - timedelta(hours=1)).isoformat()

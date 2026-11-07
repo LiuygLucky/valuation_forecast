@@ -1,5 +1,6 @@
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
+from urllib.parse import urlsplit
 from uuid import uuid4
 
 from sqlalchemy import select
@@ -18,14 +19,14 @@ from forecast.db.models import (
     Source,
     SourceVersion,
 )
-from forecast.db.queries import row_dict
+from forecast.db.queries import source_version_dict
 from forecast.domain.schemas import Claim
 from forecast.domain.time_policy import utc
 from forecast.ingestion.canonicalize import canonical_url
 from forecast.ingestion.npm_capture import ingest_capture
 from forecast.ingestion.versioning import save_source
 from forecast.providers.npm_browser import NpmBrowserProvider
-from forecast.providers.official_news import PublicArticleRetriever
+from forecast.providers.official_news import PublicArticleRetriever, source_priority
 from forecast.providers.tavily_search import TavilySearch
 
 
@@ -105,6 +106,12 @@ def collect_live(engine, search=None, extractor=None, retriever=None, npm=None):
             )
             search_ids.append(search_id)
             candidates.extend(result.data["results"])
+    # V1 source preference is a retrieval order, not a blanket credibility verdict.
+    candidates.sort(
+        key=lambda item: (
+            0 if source_priority(urlsplit(item.get("url", "")).hostname or "") == "priority" else 1
+        )
+    )
     seen: set[str] = set()
     llm_count, added = 0, 0
     for candidate in candidates:
@@ -148,8 +155,12 @@ def collect_live(engine, search=None, extractor=None, retriever=None, npm=None):
                 )
                 if source_id:
                     linked.append(source_id)
+            # Hosting a public article does not by itself establish original reporting.
+            host = a["publisher"]
             source_type = (
-                "official_primary" if "openai.com" in a["publisher"] else "original_reporting"
+                "official_primary"
+                if host == "openai.com" or host.endswith(".openai.com")
+                else "unclassified_publication"
             )
             sid, vid = save_source(
                 session,
@@ -165,6 +176,8 @@ def collect_live(engine, search=None, extractor=None, retriever=None, npm=None):
                     "page_sha256": a["page_sha256"],
                     "quote_location": a["quote_location"],
                     "cites_source_ids": linked,
+                    "source_priority": a.get("source_priority", "other_publication"),
+                    "source_tier_basis": "host and accessible article; original reporting not independently established",
                 },
             )
             previous = session.scalar(
@@ -172,7 +185,7 @@ def collect_live(engine, search=None, extractor=None, retriever=None, npm=None):
                     ExtractionRecord.version_id == vid, ExtractionRecord.status == "OK"
                 )
             )
-            source = row_dict(session.get(Source, sid)) | row_dict(session.get(SourceVersion, vid))
+            source = source_version_dict(session.get(Source, sid), session.get(SourceVersion, vid))
         if previous or not a["published_at"] or llm_count >= config["max_llm_documents"]:
             continue
         llm_count += 1

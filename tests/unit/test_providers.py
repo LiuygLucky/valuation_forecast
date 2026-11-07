@@ -126,7 +126,8 @@ def test_public_article_metadata_not_search_snippet():
         "<p>OpenAI proposed a financing at a valuation of $1.4 trillion.</p>"
     )
     retriever = PublicArticleRetriever(
-        client(lambda r: httpx.Response(200, text=html)), respect_robots=False
+        client(lambda r: httpx.Response(200, text=html, headers={"content-type": "text/html"})),
+        respect_robots=False,
     )
     result = retriever.fetch({"url": "https://openai.com/news/example", "title": "OpenAI"})
     assert result.status == "OK" and result.data["published_at"].endswith("+00:00")
@@ -134,6 +135,55 @@ def test_public_article_metadata_not_search_snippet():
     blocked = PublicArticleRetriever(client(lambda r: httpx.Response(403)), respect_robots=False)
     assert blocked.fetch({"url": "https://ft.com/a"}).status == "METADATA_ONLY"
     assert ManualNpmProvider().fetch_latest().status == "NPM_FETCH_BLOCKED"
+
+
+def test_nonpriority_publication_is_read_before_source_review():
+    requests = []
+    html = (
+        '<meta property="article:published_time" content="2026-11-01T12:00:00Z">'
+        "<p>OpenAI proposed financing at a post-money valuation of $1.4 trillion.</p>"
+    )
+
+    def handler(request):
+        requests.append(str(request.url))
+        if str(request.url).endswith("/robots.txt"):
+            return httpx.Response(200, text="User-agent: *\nAllow: /")
+        return httpx.Response(200, text=html, headers={"content-type": "text/html"})
+
+    result = PublicArticleRetriever(client(handler)).fetch(
+        {
+            "url": "https://www.example-news.com/openai",
+            "title": "OpenAI",
+            "discovery_snippet": "This is not evidence.",
+        }
+    )
+    assert result.status == "OK"
+    assert result.data["source_priority"] == "other_publication"
+    assert result.data["excerpt"].startswith("OpenAI proposed")
+    assert "This is not evidence." not in result.data["excerpt"]
+    assert len(requests) == 2
+    denied = PublicArticleRetriever(
+        client(lambda r: httpx.Response(200, text="User-agent: *\nDisallow: /"))
+    )
+    assert denied.fetch({"url": "https://example-news.com/openai"}).reason == "ROBOTS_DISALLOW"
+    redirected = PublicArticleRetriever(client(lambda r: httpx.Response(302)), respect_robots=False)
+    assert redirected.fetch({"url": "https://example-news.com/openai"}).status == "METADATA_ONLY"
+    missing = PublicArticleRetriever(
+        client(
+            lambda r: httpx.Response(
+                200, text="<p>OpenAI article</p>", headers={"content-type": "text/html"}
+            )
+        ),
+        respect_robots=False,
+    )
+    assert (
+        missing.fetch({"url": "https://example-news.com/undated"}).reason
+        == "PUBLICATION_TIME_MISSING"
+    )
+    assert (
+        PublicArticleRetriever(client(handler)).fetch({"url": "http://127.0.0.1/private"}).status
+        != "OK"
+    )
 
 
 def test_financing_amount_never_becomes_valuation(demo):

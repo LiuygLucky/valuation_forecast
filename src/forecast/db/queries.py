@@ -8,13 +8,24 @@ def row_dict(row):
     return {c.name: getattr(row, c.name) for c in row.__table__.columns}
 
 
+def source_version_dict(source, version):
+    """An immutable source can gain an accessible later version without rewriting history."""
+    data = row_dict(source) | row_dict(version)
+    metadata = version.metadata_json
+    data["access_status"] = metadata.get("version_access_status", source.access_status)
+    data["source_type"] = metadata.get("version_source_type", source.source_type)
+    data["publisher"] = metadata.get("version_publisher", source.publisher)
+    data["first_public_at"] = version.published_at or source.first_public_at
+    return data
+
+
 def freeze_inputs(session, as_of, *, provisional=False, archived=False):
     # Explicit BEGIN is necessary: Python sqlite legacy SELECT does not start a transaction.
     if not session.in_transaction():
         session.execute(text("BEGIN"))
     sources = {}
     for source, version in session.execute(select(Source, SourceVersion).join(SourceVersion)):
-        data = row_dict(source) | row_dict(version)
+        data = source_version_dict(source, version)
         data["availability_reason"] = availability_reason(data, as_of, archived)
         sources[version.version_id] = data
     observations = []
