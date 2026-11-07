@@ -65,3 +65,11 @@
 
 ## 最新开发检查点：新闻证据准入修正（2026-11-07）
 用户要求依照 Prompt_V1.md 重做证据可信度实现，其他域名不得在正文抓取之前被一律拒绝。代码已将来源域名改为优先级标记；公开网页经 URL、robots、HTML、正文、发布时间检查后才进入 LLM 与独立规则核验。非官方来源不自动认定原创；旧元数据来源后来取得正文时用新不可变版本核验。69测试通过，ruff/mypy通过。历史 LIVE 报告描述的是当时的旧代码运行，不能据此推断本次新代码已完成真实新闻抓取；新代码需新的 LIVE 快照才能审计实际新闻结果。
+
+## 第二次真实 LIVE 核查（2026-11-07，证据准入修正后）
+- run_id a811680a-d68e-457c-84f0-9a58fdc742aa，状态 COMPLETED；使用已核验的 NPM 1.281T（有效日2026-11-04）。
+- Tavily 7次成功，14个不重复新闻候选；新逻辑未按非优先域名直接拒绝。网页采集结果：8个访问受限/跳转、2个robots不可核验、4个页面发布时间缺失；合格正文0，LLM调用0，入库主张0。
+- 自动NPM刷新仍返回 NPM_FETCH_BLOCKED；本次结果 BASELINE_ONLY、UNCALIBRATED。不得称为新闻影响已经验证。
+- 15个快照文件哈希校验通过，概率和1，禁用HTTP/浏览器访问的离线重放 REPRODUCED，结果哈希匹配。
+- 详见 docs/live_validation_after_evidence_change.json 与 docs/live_report_after_evidence_change.md；快照在 data/snapshots/a811680a-d68e-457c-84f0-9a58fdc742aa。
+- 当前明确剩余瓶颈：公开文章的访问限制和页面内可核验发布时间。不得用Tavily搜索日期或摘要冒充原文事实。

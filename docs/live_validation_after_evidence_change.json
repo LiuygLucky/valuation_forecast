@@ -1,0 +1,77 @@
+{
+  "run_id": "a811680a-d68e-457c-84f0-9a58fdc742aa",
+  "status": "COMPLETED",
+  "mode": "LIVE",
+  "as_of_utc": "2026-11-07T02:51:04.470513+00:00",
+  "snapshot_path": "D:\\Desktop\\valuation_forecast\\data\\snapshots\\a811680a-d68e-457c-84f0-9a58fdc742aa",
+  "replay_status": "REPRODUCED",
+  "offline_replay_verified": true,
+  "artifact_count": 15,
+  "result_sha256": "ce5e4997a341e9ec0a4f8b8571ae9a922db5f79214f9c225cd82a7e0eb6777af",
+  "source_sha256": "49ffd00c56196b96b92f291c8edee0d15525dd89457289a0f69649ee25da3aad",
+  "anchor_value_trillion": "1.281",
+  "anchor_effective_date": "2026-11-04",
+  "collection": {
+    "documents": 14,
+    "llm_documents": 0,
+    "new_verified_claims": 0,
+    "npm_import": null,
+    "npm_status": "NPM_FETCH_BLOCKED",
+    "search_ids": [
+      "cde72612-c981-481c-95a1-c60de448e3ff",
+      "762f7474-86c0-4faf-a496-1bd7879942fd",
+      "905539c8-4bc0-4377-aef0-48869b5b1b6a",
+      "e59a45db-ab65-4a26-b766-0c1227d97002",
+      "d4f47e35-3d9a-4c4e-bad0-ea54159c97ec",
+      "0c1d83a5-fff6-48b2-8217-d1afc3f82210",
+      "0e02548a-650e-4921-aeca-a60068503398"
+    ],
+    "warnings": [
+      "METADATA_ONLY:ACCESS_RESTRICTED_OR_REDIRECT; no bypass attempted",
+      "METADATA_ONLY:ROBOTS_UNAVAILABLE",
+      "NO_EVIDENCE: no new verified claims; existing eligible evidence may still apply",
+      "NPM_FETCH_BLOCKED",
+      "TIME_NOT_VERIFIED:PUBLICATION_TIME_MISSING"
+    ]
+  },
+  "provider_results": [
+    {
+      "provider": "NPM",
+      "status": "NPM_FETCH_BLOCKED",
+      "reason": "NPM_ACCESS_RESTRICTED_OR_REDIRECTED",
+      "count": 1
+    },
+    {
+      "provider": "Tavily",
+      "status": "OK",
+      "reason": null,
+      "count": 7
+    },
+    {
+      "provider": "Article",
+      "status": "METADATA_ONLY",
+      "reason": "ACCESS_RESTRICTED_OR_REDIRECT; no bypass attempted",
+      "count": 8
+    },
+    {
+      "provider": "Article",
+      "status": "TIME_NOT_VERIFIED",
+      "reason": "PUBLICATION_TIME_MISSING",
+      "count": 4
+    },
+    {
+      "provider": "Article",
+      "status": "METADATA_ONLY",
+      "reason": "ROBOTS_UNAVAILABLE",
+      "count": 2
+    }
+  ],
+  "included_evidence": 0,
+  "probability_sum": 1.0,
+  "notes": [
+    "This run used the updated source admission code.",
+    "No nonpriority domain was rejected solely for its domain.",
+    "No eligible article with verifiable publication time reached LLM extraction.",
+    "The previous verified NPM browser observation remained the anchor; automated refresh was blocked."
+  ]
+}

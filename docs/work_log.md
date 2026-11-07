@@ -76,3 +76,11 @@
 - 旧库中 `METADATA_ONLY` 的不可变来源记录无需改写；新增可访问正文版本在版本元数据中保留 `ACCESSIBLE`、来源类型和发布者，冻结输入按版本读取。旧预测快照保持原代码指纹；严格重放需恢复原代码版本。
 - 增加非优先域名正文获取、摘要隔离、缺失时间、robots、跳转、本地地址拒绝，以及旧元数据版本升级为可核验正文版本的测试。69 项测试通过；ruff、mypy 通过。
 - 尚未宣称其他域名报道的事实已被独立证实。真实性、共同匿名信源、转载与复杂口径仍按 V1 保守审阅；没有可核验正文和时间时不进入概率更新。
+
+## 第二次真实 LIVE 核查（2026-11-07，证据准入修正后）
+- run_id a811680a-d68e-457c-84f0-9a58fdc742aa，状态 COMPLETED；使用已核验的 NPM 1.281T（有效日2026-11-04）。
+- Tavily 7次成功，14个不重复新闻候选；新逻辑未按非优先域名直接拒绝。网页采集结果：8个访问受限/跳转、2个robots不可核验、4个页面发布时间缺失；合格正文0，LLM调用0，入库主张0。
+- 自动NPM刷新仍返回 NPM_FETCH_BLOCKED；本次结果 BASELINE_ONLY、UNCALIBRATED。不得称为新闻影响已经验证。
+- 15个快照文件哈希校验通过，概率和1，禁用HTTP/浏览器访问的离线重放 REPRODUCED，结果哈希匹配。
+- 详见 docs/live_validation_after_evidence_change.json 与 docs/live_report_after_evidence_change.md；快照在 data/snapshots/a811680a-d68e-457c-84f0-9a58fdc742aa。
+- 当前明确剩余瓶颈：公开文章的访问限制和页面内可核验发布时间。不得用Tavily搜索日期或摘要冒充原文事实。
