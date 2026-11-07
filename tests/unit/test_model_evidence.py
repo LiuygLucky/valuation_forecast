@@ -39,6 +39,26 @@ def test_extractor_receives_registered_causal_vocabulary(demo):
     assert "customer_demand_t" in prompt and "H05" in prompt
 
 
+def test_financing_conflict_does_not_quarantine_revenue_in_same_article(demo):
+    closed = deepcopy(demo["claims"][0])
+    closed["claim_json"]["event_status"] = "closed"
+    proposed = deepcopy(closed)
+    proposed["claim_id"] = "later_proposal"
+    proposed["claim_json"].update(event_status="proposed", published_at="2026-11-07T15:00:00Z")
+    revenue = deepcopy(closed)
+    revenue["claim_id"] = "revenue_in_same_article"
+    revenue["claim_json"].update(
+        claim_type="revenue", event_cluster_id="openai-revenue", reported_valuation_trillion=None
+    )
+
+    clusters = build_clusters([closed, proposed, revenue], AS_OF)
+
+    assert len(clusters) == 2
+    by_type = {cluster["claim"]["claim_type"]: cluster for cluster in clusters}
+    assert by_type[closed["claim_json"]["claim_type"]]["exclusion_reason"] == "REVIEW_REQUIRED"
+    assert by_type["revenue"]["exclusion_reason"] is None
+
+
 def calculation(inputs):
     return calculate(
         inputs,

@@ -8,6 +8,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from forecast.agent.orchestrator import collect_live
+from forecast.agent.prompts import PROMPT_VERSION
 from forecast.application.demo import demo_inputs
 from forecast.application.input_validation import freeze_task_contract, validate_frozen_inputs
 from forecast.application.run_modes import RunMode, parse_mode
@@ -240,7 +241,10 @@ def forecast_once(
             "input_records": input_manifest(inputs),
             "search_ids": collection["search_ids"],
             "llm": {
-                "prompt_version": "claims-v1",
+                "prompt_version": PROMPT_VERSION,
+                "input_prompt_versions": sorted(
+                    {c["extractor_version"] for c in inputs["claims"] if c.get("extractor_version")}
+                ),
                 "models": sorted({c.get("extractor_model", "synthetic") for c in inputs["claims"]}),
             },
             "result_sha256": object_hash(posterior),
